@@ -1,0 +1,88 @@
+﻿@model MrDelivery.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+<head>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/register.css" />
+        <link rel="shortcut icon" href="~/images/mrd-logo-donut.svg" class="logo" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body class="registerBackground">
+    <div class="row form-horizontal">
+        <h3>Delicious food awaits!</h3>
+        <h5>All we need is your email and mobile number</h5>
+        <br />
+        <div class="col-md-4">
+            <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="firstName" type="text" class="form-control" placeholder="First Name" id="textboxBorder"/>
+                    <span asp-validation-for="firstName" class="text-danger col-md-8"></span>
+                </div><br />
+                <div class="form-group">
+                    <input asp-for="lastName" type="text" class="form-control" placeholder="Last Name" id="textboxBorder"/>
+                    <span asp-validation-for="lastName" class="text-danger col-md-8"></span>
+                </div><br />
+                <div class="form-group">
+                    <input asp-for="email" type="text" class="form-control" placeholder="Email Address" id="textboxBorder"/>
+                    <span asp-validation-for="email" class="text-danger col-md-8"></span>
+                </div><br />
+                <div class="form-group">
+                    <input asp-for="password" type="password" class="form-control" placeholder="Password" id="textboxBorder"/>
+                    <span asp-validation-for="password" class="text-danger col-md-8"></span>
+                </div><br />
+                <div class="form-group">
+                    <input asp-for="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" id="textboxBorder"/>
+                    <span asp-validation-for="confirmPassword" class="text-danger col-md-8"></span>
+                </div><br />
+                <div class="form-group">
+                    <input asp-for="phoneNumber" type="text" class="form-control" placeholder="Phone Number" id="textboxBorder"/>
+                    <span asp-validation-for="phoneNumber" class="text-danger col-md-8"></span>
+                </div><br />
+                <div class="form-group">
+                    <input id="registerButtonBox" type="submit" value="Create Account" class="btn-lg btn-default" />
+                </div>
+                @*<div class="form-group">
+                       <a asp-controller="Account" asp-action="Login" id="regCenter">A Member? <b>Login</b></a>
+                    </div>*@
+            </form>
+        </div>
+    </div>
+    <a asp-controller="Account" asp-action="Login" style="margin-left:615px;text-align:center;color:#000000">Already a member? <b>Login Here</b></a>
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

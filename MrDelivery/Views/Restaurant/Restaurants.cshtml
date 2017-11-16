@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ApplicationCore.Entities.Restaurants>
+
+@{
+    ViewData["Title"] = "Restaurants";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<style>
+    .item-thumbnail {
+        max-width: 370px;
+        width: 100%;
+    }
+    .index-wrap {
+        position:relative;
+        border: 2px solid #00ff90;
+        border-radius:8px;
+        /*float: left;*/
+        height: 300px;
+        width:510px;
+        margin: 0 10px 20px 0;
+        margin-left:30px;
+        padding: 20px;
+        display: inline-block;
+    }
+    #myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+</style>
+
+@*<div>
+    <h4>Restaurant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+    </dl>
+</div>*@
+
+
+<br /><br/>
+@*<table class="table table-striped table-hover" id="myTable">
+    <tr>
+        <th>
+           @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+        <th></th>
+    </tr>*@
+    @foreach (var item in ViewBag.res)
+    {
+        <div class="index-wrap">
+            <div class="image-wrap">
+                @*<img src="#" id="myImg" style="height:200px;max-width:200px;" class="img-responsive"/>*@
+            </div>
+            <div class="nav navbar-left" style="color:#000000;border:3px solid red; margin-top:195px;width:100%">
+                <p style="font-weight:900;float:left;">@item.Name</p><br/>
+                <p style="font-size:10px;">@item.ItemType</p>
+            </div>
+        </div>
+        @*<tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Location
+            </td>
+            <td>
+                @item.ItemType
+            </td>
+            <td>
+               "@item.ImagePath"
+            </td>
+        </tr>*@
+    }
+@*</table>*@

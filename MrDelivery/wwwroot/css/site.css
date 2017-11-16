@@ -1,0 +1,144 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.logo {
+    position: relative;
+    float: left;
+    height: 50px;
+    border-radius: 10%;
+    background-color: #00ffff;
+    background-image: url('~/images/mrd-logo-donut.svg');
+}
+.logo2 {
+    position: relative;
+    float: left;
+    height: 70px;
+    border-radius: 10%;
+    background-color: #ffa900;
+    background-image: url('~/images/mrd_egg_logo.svg');
+}
+.background {
+    position: relative;
+    background: url('../images/mrd-food.jpg');
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 550px;
+    background-size: cover;
+}
+.driverBackground {
+    position: relative;
+    background: url('~/images/car-driver.jpg');
+    background-image: url('~/images/car-driver.jpg');
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 550px;
+    background-size: cover;
+}
+#increase-header {
+    height: 80px;
+}
+
+input {
+    text-align: center;
+}
+.text {
+    font-size: 25px;
+    color: #ffffff;
+    margin-top: 20px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#box {
+    margin-top: 15px;
+    border: 3px solid white;
+}
+
+/*Login & Register css*/
+
+/*Search textbox & button*/
+.searchBox {
+    margin-bottom: 300px;
+    padding-right: 2em;
+    margin-left: 35%;
+}
+
+button {
+    height: 60px;
+    width: 400px;
+    border-radius: 20%;
+}
+
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+/* style glyph */
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.inner-addon .glyphicon-arrow-right {
+    margin-top: 10px;
+}
+/* align glyph */
+.left-addon .glyphicon {
+    left: 0px;
+}
+
+.right-addon .glyphicon {
+    right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+    padding-left: 30px;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}
+
+
+/*body {
+    margin: 10px;
+}*/

@@ -1,0 +1,62 @@
+﻿#registerButtonBox {
+    border: 3px solid black;
+    height: 60px;
+    width: 470px;
+    border-radius: 30px;
+    font-weight: 900;
+    color: #808080;
+}
+
+.row {
+    margin-top: 30px;
+}
+
+.row input, span {
+    margin-left: 500px;
+}
+
+.row h2, h4 {
+    text-align: center;
+}
+
+input {
+    text-align: center;
+    color: #ff0000;
+}
+
+#textboxBorder {
+    border-color: #6dcff6;
+    border-bottom: 2px solid black;
+}
+
+.row h3, h5, #regCenter {
+    text-align: center;
+}
+
+.registerBackground {
+    background-color: #6dcff6;
+}
+
+input[type="text"] {
+    background-color: #6dcff6;
+}
+
+input[type="text"]:-ms-input-placeholder {
+    color: #ffffff;
+}
+
+input[type="text"]::-moz-placeholder {
+    color: #ffffff;
+}
+
+input[type="password"] {
+    background-color: #6dcff6;
+}
+
+input[type="password"]:-ms-input-placeholder {
+    color: #ffffff;
+}
+
+input[type="password"]::-moz-placeholder {
+    color: #ffffff;
+}
