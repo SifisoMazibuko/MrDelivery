@@ -5,39 +5,11 @@
     Layout = null;
 }
 
-<style>
-    #driverBox {
-        background-color: #00ffff;
-        margin-left: 70%;
-        padding-top: 80px;
-        width: 400px;
-    }
-    #driverSubmitButton {
-        height: 70px;
-        width: 370px;
-        font-size: medium;
-        font-weight: 900;
-        color: #ff0000;
-    }
-    input value {
-        color: #ff0000;
-    }
-    #driverBackground {
-        position: relative;
-        background: url('~/images/car-driver.jpg');
-        background-image: url('~/images/car-driver.jpg');
-        background-repeat: no-repeat;
-        width: 100%;
-        height: 550px;
-        background-size: cover;
-    }
-</style>
-
-
 <head>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/driver.css" />
         <link rel="shortcut icon" href="~/images/mrd-logo-donut.svg" class="logo" />
     </environment>
     <environment exclude="Development">
@@ -66,7 +38,7 @@
         </div>
     </nav>
     @*<img src="~/images/car-driver.jpg" class="driverBackground" />*@
-    <div class="row driverBackground" id="driverBackground">
+    <div class="row">
         <div class="col-md-4" id="driverBox">
             <form asp-action="DriverView">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -161,6 +133,12 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <div class="container body-content">
+        <footer>
+            <p>&copy; 2017 - MrDelivery</p>
+        </footer>
     </div>
 
     <environment include="Development">

@@ -8,7 +8,9 @@ namespace MrDelivery.ViewModels.Account
 {
     public class ForgotPasswordViewModel
     {
+        [Required]
         [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
         public String Email { get; set; }
     }
 }

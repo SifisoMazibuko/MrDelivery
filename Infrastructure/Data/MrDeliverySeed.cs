@@ -32,6 +32,10 @@ namespace Infrastructure.Data
                         ImagePath = "http://catalogbaseurltobereplaced/images/products/1.png"
                 }
             };
+            foreach (var item in resturants)
+            {
+                context.Restaurants.Add(item);
+            }
             context.SaveChanges();
         }
 

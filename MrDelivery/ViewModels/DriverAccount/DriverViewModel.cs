@@ -10,10 +10,10 @@ namespace MrDelivery.ViewModels.DriverAccount
     {
         
         [Required]
-        [Display(Name = "FullName")]
+        [Display(Name = "Full Name")]
         public String FullName { get; set; }
         [Required]
-        [Display(Name = "PhoneNumber")]
+        [Display(Name = "Phone Number")]
         public String PhoneNumber { get; set; }
         [Required]
         [Display(Name = "Email")]

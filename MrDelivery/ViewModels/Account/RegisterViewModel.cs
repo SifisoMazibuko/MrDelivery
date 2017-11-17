@@ -12,9 +12,11 @@ namespace MrDelivery.ViewModels.Account
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Firstname")]
         public String firstName { get; set; }
 
         [Required]
+        [Display(Name = "lastname")]
         public String lastName { get; set; }
 
         [Required]
@@ -34,6 +36,7 @@ namespace MrDelivery.ViewModels.Account
 
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone number")]
         public String phoneNumber { get; set; }
     }
 }

@@ -49,28 +49,36 @@ namespace MrDelivery.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model,string returnUrl = null)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if(isValid(model.Email, model.Password))
+                if (ModelState.IsValid)
                 {
-                    var customer = (from c in context.Customers
-                                    where c.email == model.Email && c.password == model.Password
-                                    select c).ToList();
-
-                    foreach (var cus in customer)
+                    if (isValid(model.Email, model.Password))
                     {
-                        ViewData["cusId"] = cus.Id;
-                        ViewData["firstname"] = cus.firstName;
-                        ViewData["LastName"] = cus.lastName;
+                        var customer = (from c in context.Customers
+                                        where c.email == model.Email && c.password == model.Password
+                                        select c).ToList();
+
+                        foreach (var cus in customer)
+                        {
+                            ViewData["cusId"] = cus.Id;
+                            ViewData["firstname"] = cus.firstName;
+                            ViewData["LastName"] = cus.lastName;
+                        }
                     }
+                    ViewData["ReturnUrl"] = returnUrl;
+                    var errors = ModelState
+                           .Where(x => x.Value.Errors.Count > 0)
+                           .Select(x => new { x.Key, x.Value.Errors })
+                            .ToArray();
+                    return RedirectToAction("Index", "Home");
                 }
-                ViewData["ReturnUrl"] = returnUrl;
-                var errors = ModelState
-                       .Where(x => x.Value.Errors.Count > 0)
-                       .Select(x => new { x.Key, x.Value.Errors })
-                        .ToArray();
-                return RedirectToAction("Index","Home");
             }
+            catch (LoginException err)
+            {
+                throw new Exception("Error: Please try again" + err.Message.ToString());
+            }
+            
             //ModelState.AddModelError(string.Empty, "Invalid login attempt");
             return View(model);
         }
@@ -84,6 +92,11 @@ namespace MrDelivery.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel model, string returnUrl = null)
         {
+            string name = "";
+            var errors = ModelState
+                       .Where(x => x.Value.Errors.Count > 0)
+                       .Select(x => new { x.Key, x.Value.Errors })
+                        .ToArray();
             try
             {
                 if (ModelState.IsValid)
@@ -99,20 +112,38 @@ namespace MrDelivery.Controllers
                         user.phoneNumber = model.phoneNumber;
                     };
 
-                    //var u = CustomerProvider.saveCustomer (model.Id, model.firstName, model.lastName, model.email,
-                   // model.password,model.confirmPassword,model.phoneNumber); 
-                    var errors = ModelState
-                       .Where(x => x.Value.Errors.Count > 0)
-                       .Select(x => new { x.Key, x.Value.Errors })
-                        .ToArray();
+                    foreach (var cus in context.Customers)
+                    {
+                        name = cus.firstName;
+                    }
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Sifiso Mazibuko", "mazibujo19@gmail.com"));
+                    message.To.Add(new MailboxAddress(model.email));
+                    message.Subject = "Welcome to MrDeliverFood";
+                    message.Body = new TextPart
+                    {
+                        Text = string.Format("Hi " + name + ", welcome to MrDelivery Food Service, Hope you enjoy our service"),
+
+                    };
+                    using (var client = new MailKit.Net.Smtp.SmtpClient())
+                    {
+                        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.AuthenticationMechanisms.Remove("XOAUTH2");
+                        client.Authenticate("mazibujo19@gmail.com", "Secretive2017");
+
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+                    
                     context.Customers.Add(user);
                     context.SaveChanges();
                     return RedirectToAction("Login", "Account");
                 }
             }
-            catch (RegisterException e)
+            catch (RegisterException err)
             {
-                string msg = e.Message;
+                throw new Exception("Error: Please try again" + err.Message.ToString());
             }
             
             return View(model);
@@ -164,7 +195,7 @@ namespace MrDelivery.Controllers
                 client.Disconnect(true);
             }
 
-                model.email = string.Empty;
+            model.email = string.Empty;
             ModelState.Clear();
             return View();
         }

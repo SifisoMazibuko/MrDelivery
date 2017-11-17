@@ -10,5 +10,6 @@ namespace MrDelivery.ViewModels
         public int Id { get; set; }
         public int Quantity { get; set; }
         public DateTimeOffset dateCreated { get; set; }
+        public List<CartItemViewModel> Items { get; set; } = new List<CartItemViewModel>();
     }
 }

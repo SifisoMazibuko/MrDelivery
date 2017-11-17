@@ -11,5 +11,10 @@ namespace ApplicationCore.Entities
         public string Location { get; set; }
         public string ItemType { get; set; }
         public string ImagePath { get; set; }
+
+        public static implicit operator Restaurants(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
