@@ -9,6 +9,9 @@ using System.Collections.Concurrent;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace MrDelivery.Controllers.Api
 {
@@ -26,45 +29,68 @@ namespace MrDelivery.Controllers.Api
         [HttpGet]
         public IEnumerable<Customer> Get()
         {
-            var customer = (from c in context.Customers
-                            select c ).ToList();
+            var customer = context.Customers.ToList();
             return customer;
         }
 
         // GET: api/Customer/5
         [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(string id, Customer customers)
+        public IEnumerable<Customer> Get(int id, Customer customers)
         {
-            Customer customer = null;
-            if (_customers.TryGetValue(id, out customers))
-            {
-                return Ok(customer);
-            }
-            else
-            {
-                return NotFound();
-            }
+            var customer = context.Customers.Where(c => c.Id == id).ToList();
+            return customer;
         }
         
         // POST: api/Customer
         [HttpPost]
         public IActionResult Post([FromBody]Customer customer)
         {
-            if (customer == null){
-                return BadRequest("Customer can not be null");
-            }
-            if (!ModelState.IsValid)
+           /* using (var client = new HttpClient())
             {
-                return BadRequest(ModelState);
-            }
-            return CreatedAtRoute("", new { id = customer.Id, customer});
+                var stringContent = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
+                customer = new Customer
+                {
+                    firstName = "Marike",
+                    lastName = "fourie",
+                    password = "01234567",
+                    confirmPassword = "01234567",
+                    phoneNumber = "0745896521",
+                    email = "marike@reverside.co.za"
+                };
+                client.BaseAddress = new Uri("http://localhost:49790/");
+                var response = client.PostAsync("api/Customer/", stringContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Write("Success");
+                }
+                else
+                {
+                    Console.Write("error");
+                }
+            }*/
+
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+
+            context.Customers.Add(new Customer
+            {
+                Id = customer.Id,
+                firstName = customer.firstName,
+                lastName = customer.lastName,
+                email = customer.email,
+                password = customer.password,
+                confirmPassword = customer.confirmPassword,
+                phoneNumber = customer.phoneNumber,
+            });
+            context.SaveChanges();
+            return Ok();
         }
         
         // PUT: api/Customer/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Customer customer)
         {
-            if (customer == null){
+            if (customer == null){ 
                 return BadRequest("Customer can not be null");
             }
             if (!ModelState.IsValid){
@@ -73,15 +99,39 @@ namespace MrDelivery.Controllers.Api
             if (customer.Id != id){
                 return BadRequest($"product.id dont match the id parameter");
             }
+            using (var client = new HttpClient())
+            {
+                var stringContent = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
+                customer = new Customer
+                {
+                    firstName = "Marike",
+                    lastName = "fourie",
+                    password = "01234567",
+                    confirmPassword = "01234567",
+                    phoneNumber = "0745896521",
+                    email = "marike@reverside.co.za"
+                };
+                client.BaseAddress = new Uri("http://localhost:49790/");
+                var response = client.PutAsync("api/Customer/", stringContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Write("Success");
+                }
+                else
+                {
+                    Console.Write("error");
+                }
+            }
             return new StatusCodeResult(id);
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
-            Customer customer = null;
-            _customers.TryRemove(id, out customer);
+            var customer = context.Customers.Find(id);
+            context.Customers.Remove(customer);
+            context.SaveChanges();
             return new StatusCodeResult(StatusCodes.Status200OK);
         }
     }
