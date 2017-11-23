@@ -16,6 +16,22 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <style>
+        .brands-section .title {
+            font-size:32px;
+            text-transform: uppercase;
+            font-weight:700;
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+        .brands-section .subtitle {
+            font-size: 32px;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 0px 20px 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body style="background-color:#6dcff6">
     <nav class="navbar navbar-inverse navbar-fixed-top" id="increase-header">
@@ -35,11 +51,13 @@
         </div>
     </nav>
     <img src="~/images/mrd-food.jpg" class="background" />
-     @await Html.PartialAsync("_SearchPartial")
+     @await Html.PartialAsync("_SearchPartial")   
      @await Html.PartialAsync("_DriverPartial")
-    
-    <div class="container body-content">
+    <div class="">`
         @RenderBody()
+    </div>
+    <br/>
+    <div class="container body-contents">
         <footer>
             <p>&copy; 2017 - MrDelivery</p>
         </footer>

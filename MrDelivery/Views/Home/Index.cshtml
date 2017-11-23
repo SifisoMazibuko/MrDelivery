@@ -2,128 +2,98 @@
     ViewData["Title"] = "Home Page";
 }
 
-<!--<style>
-    .searchBox {
-        margin-bottom: 620px;
-        padding-right: 2em;
-        margin-left: 350px;
+<style>
+    
+    .brands-section .brans-restuarants ul li input {
+        display: none;
     }
-    button {
-        height:50px;
-        width: 400px;
-        border-radius:20%;
+    .brands-section .brans-restuarants ul li .image {
+        display: none;
     }
-
+    input[type="radio"] {
+        margin: 3px 3px 0px 5px;
+    }
+    *, input {
+        box-sizing: border-box;
+    }
+    label {
+        cursor: default;
+    }
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .restaurant-logo {
+        height: 80px;
+        text-indent: -9999em;
+        width: 140px;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -80px;
+        background-size: 50%;
+    }
+    .img-inline{
+        display: inline-block;
+        float:left;
+        clear:both;
+        padding:20px 20px 20px 230px;
+    }
+    #brandbox-section {
+        height: 320px;
+        width: 100%;
+        border-color: #000000;
+        border: 2px solid;
+        border-radius: 8px;
+        background-color: #ffffff;
+        margin-bottom: 320px;
+    }
 </style>
-<div class="form-group searchBox">
-    <div class="col-sm-10">
-        <input style="height:50px;width:400px;border-radius: 10px;" class="form-control" type="search" placeholder="Enter your street address" id="search-input"><br/>
-
-        <button style="background-color:#ffd800;color:#000000;font-weight:bold;border-radius: 10px;" type="submit" class="btn btn-primary">GET CHOW DELIVERED NOW!</button>
+<div class="brands-section" id="brandbox-section">
+    <h3 class="title">What do you feel like? </h3>
+    <h2 class="subtitle">Get it delivered from over 1600 restaurants, including SA' favourites...</h2>
+    <div class="img-inline" >
+        <img src="~/images/brands/panarottis.PNG"/>
+        <img src="~/images/brands/wimpy.PNG"/>
+        <img src="~/images/brands/spur.PNG"/>
+        <img src="~/images/brands/simplyasia.PNG"/>
+        <img src="~/images/brands/roccomamas.PNG"/>
+        <img src="~/images/brands/ob.PNG"/>
+        <img src="~/images/brands/nandos.PNG"/>
+        <img src="~/images/brands/kfc.PNG" />
+        <img src="~/images/brands/colcacchio.PNG"/>
     </div>
+    @*<div class="brans-restuarants">
+        <ul>
+            <li>
+                <label>
+                    <img src="~/images/brands/panarottis.PNG"  class="restaurant-logo" />
+                </label>
+            </li>
+            <li>
+                <img src="~/images/brands/wimpy.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/spur.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/simplyasia.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/roccomamas.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/ob.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/nandos.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/kfc.PNG" class="restaurant-logo"/>
+            </li>
+            <li>
+                <img src="~/images/brands/colcacchio.PNG" class="restaurant-logo"/>
+            </li>
+        </ul>
+    </div>*@
 </div>
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
-</div>-->
-

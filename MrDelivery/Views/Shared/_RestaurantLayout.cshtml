@@ -22,6 +22,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script> 
     <style>
         .header-color {
             background-color: #6dcff6;
@@ -32,7 +33,7 @@
         .availability-box {
             position: relative;
             height: 100px;
-            width: 1100px;
+            width: 1150px;
             background-color: #ffa900;
             margin-top: 70px;
             border-radius: 8px;
@@ -74,7 +75,7 @@
                     <div class="col-sm-10">
                         <div class="inner-addon left-addon">
                             <i class="glyphicon glyphicon-search"></i>
-                            <input style="height:40px;width:550%;border-radius: 10px;" class="form-control" type="search" placeholder="Search restaurant, cuisine and preference" id="search-input"><br />
+                            <input style="height:40px;width:550%;border-radius: 10px;" class="form-control filterinput" type="search" placeholder="Search restaurant, cuisine and preference" onkeyup="myFunction()" id="myInput"><br />
                         </div>
                     </div>
                 </div>

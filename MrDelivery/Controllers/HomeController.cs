@@ -5,29 +5,61 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MrDelivery.Models;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MrDelivery.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private MrDeliveryContext context { get; set; }
+        private bool _disposeContext = false;
+
+        public HomeController(DbContextOptions<MrDeliveryContext> option)
         {
+            context = new MrDeliveryContext(option);
+            _disposeContext = true;
+        }
+        public IActionResult Index(string search)
+      {
+            if (!String.IsNullOrEmpty(search))
+            {
+                var restaurant = context.Restaurants.Where(s => s.Location.StartsWith(search)
+                               || s.Location.Contains(search)
+                                );
+                
+                foreach(var a in restaurant)
+                {
+                    if (!string.IsNullOrEmpty(a.Location))
+                    {
+                        return RedirectToAction("Restaurants", "Restaurant");
+                    }
+                }
+            }
+            //if (ModelState.IsValid)
+            //{
+            //    if (!String.IsNullOrEmpty(search))
+            //    {
+            //        restaurant = restaurant.Where(s => s.Location.StartsWith(search)
+            //                    || s.Location.Contains(search)
+            //                    );
+            //    }
+            //    // return RedirectToAction("Restaurants", "Restaurant");
+            //}
+
+            ViewBag.res = context.Restaurants.ToList();
             return View();
         }
 
-        public IActionResult About()
+        protected override void Dispose(bool disposing)
         {
-            ViewData["Message"] = "Your application description page.";
+            if (_disposeContext)
+                context.Dispose();
 
-            return View();
+            base.Dispose(disposing);
+
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
 
         public IActionResult Error()
         {

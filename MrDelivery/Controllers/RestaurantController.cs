@@ -30,6 +30,11 @@ namespace MrDelivery.Controllers
             return View(res);
         }
 
+        public IActionResult Menu()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (_disposeContext)
