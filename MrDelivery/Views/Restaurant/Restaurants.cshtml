@@ -80,24 +80,27 @@
 
     @foreach (var item in ViewBag.res)
     {
-           <div class="index-wrap" id="myTable">
-               <div class="image-wrap topDiv">
-                   <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
-               </div>
-               <div class="nav navbar-left innerDiv">
-                   <br />
-                   <div class="restaurant-logo pull-left">
-                       <span><img src="@item.Icon" lazy-img="@item.Icon" /></span>
-                   </div>
-                   <div class="pull-left">
-                       <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
-                       <p style="font-size:10px;float:left;">@item.ItemType</p>
-                   </div>
-                   @*<p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
-                   <p style="font-size:10px;float:left;">@item.ItemType</p>*@
-                   
-               </div>
-           </div>       
+       
+        <a href="@Url.Action("Menu","Restaurant",new { search = item.Name})">
+            <div class="index-wrap" id="myTable">
+                <div class="image-wrap topDiv">
+                    <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
+                </div>
+                <div class="nav navbar-left innerDiv">
+                    <br />
+                    <div class="restaurant-logo pull-left">
+                        <span><img src="@item.Icon" lazy-img="@item.Icon" /></span>
+                    </div>
+                    <div class="pull-left">
+                        <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
+                        <p style="font-size:10px;float:left;">@item.ItemType</p>
+                    </div>
+                    @*<p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
+                        <p style="font-size:10px;float:left;">@item.ItemType</p>*@
+
+                </div>
+            </div>
+        </a>
     }
 
 <script type="text/javascript">

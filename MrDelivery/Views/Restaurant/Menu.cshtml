@@ -1,0 +1,205 @@
+﻿@*@model IEnumerable<ApplicationCore.Entities.Restaurants>*@
+@model IEnumerable<MrDelivery.ViewModels.CartItemViewModel>
+@*@model MrDelivery.ViewModels.CartItemViewModel*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menu</title>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/driver.css" />
+        <link rel="shortcut icon" href="~/images/mrd-logo-donut.svg" class="logo" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <style>
+        .menu-tabs {
+            background: #6dcff6;
+            margin: 0 25px;
+            padding: 25px 0;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 6px;
+        }
+        .menu-info {
+            background: #fff;
+            border: 1px solid gray;
+            margin: 0 25px;
+            padding: 30px 0;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 6px;
+        }
+
+        .restaurant-view {
+            position: static;
+            height: auto;
+            padding-top: 0;
+            margin-bottom: 0;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            z-index: 2;
+        }
+
+        .restaurant-items-wrapper {
+            position: relative;
+            cursor: pointer;
+            background: #ffffff;
+            margin: 0 25px;
+            padding: 25px 0;
+            text-align: center;
+        }
+
+        .menu-go-to-cart {
+            width: 100%;
+            position: fixed;
+            border-top: 1px solid #eee;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0,0,0,.05);
+            background: 0 0;
+            padding: 0;
+            bottom: 0;
+        }
+        .restaurant-logo {
+        width: 60px;
+        padding: 20px 0 0;
+        position: absolute;
+    }
+
+        .restaurant-logo span {
+            display: block;
+        }
+
+        .restaurant-logo img {
+            width: 60px;
+            height: auto;
+            border-radius: 100px;
+            margin-right: 200PX;
+            float: left;
+            top: -60px;
+            left: -210px;
+            align-content:flex-start;
+        }
+        .nav .pull-left {
+            padding: 0px 0px 0px 90px;
+        }
+        .move-left {
+            padding: 20px 798px 0px 40px;
+        }
+        .top-left {
+            position: absolute;
+            top: 25px;
+            left: 170px;
+        }
+    </style>
+</head>
+<body style="background-color:#e6e6e6; padding:10px;">
+    <div class="container" style="padding-top:-50px;">
+        <img src="@ViewBag.img" style="border-radius:8px;height:250px;width:100%;background-size:cover;" />
+        <div class="top-left">
+            <a asp-controller="Restaurant" asp-action="Restaurants"><p style="font-weight:600;font-size:18px;color:#4bbbf3"> < Back to Restaurants</p></a>
+        </div>
+        <div class="restaurant-view ">
+            <div class="restaurant-items-wrapper">
+                <span></span>
+                <br />
+                <div class="restaurant-logo">
+                    <span><img src="@ViewBag.icon" lazy-img="@ViewBag.icon" /></span>
+                </div>
+                <div class="move-left">
+                    <p style="font-weight:900;">@ViewBag.name @ViewBag.location</p>
+                    <p style="font-size:10px;">@ViewBag.itemType</p>
+                </div>
+            </div>
+            <div class="menu-tabs">
+                <h4>Menu</h4>
+            </div>
+            <div style="margin-bottom:10px;"></div>
+            @foreach (var Model in Model)
+            {
+
+                <div style="border:2px solid #cfcccc;width:50%;height:auto;margin-left:25px;display:inline-block">
+                    <div>
+                        <p style="font-size:16px;margin-top:5px;text-align:center"><b>@Model.MenuType</b></p>
+                       <hr style="border:0.5px solid;"/>
+                        <div class="row" style="margin-left:6px;">
+                            <div class="col-sm-10">
+                                <p style="font-size:16px;"><b>@Model.ItemName</b></p>
+                                <span style="font-size:8px;">@Model.Description</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <p style="font-size:10px;">from</p>
+                                <p>R @Model.UnitPrice</p>
+                            </div>
+                        </div>
+                    </div>    
+                    <br />
+                </div>
+                <div style="margin-top:3px;"></div>
+                @*</div>*@
+            }
+            <br />
+
+            @* <div class="menu-info">
+            @foreach (var item in Model)
+            {
+                <div style="border:2px solid #cfcccc;width:50%;height:auto;margin-left:25px;">
+                    <div>
+                        <p style="font-size:20px;margin-top:5px;"><b>@item.MenuType</b></p><hr />
+                        <p style="border-bottom:2px solid #cfcccc;"></p>
+                        <div class="col-sm-10">
+                            <p style="font-size:16px;"><b>@item.ItemName</b></p>
+                            <span style="font-size:8px;">@item.Description</span>
+                        </div>
+                        <div class="col-sm-2">
+                            <p style="font-size:10px;">from</p>
+                            <p>R @item.UnitPrice</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size:20px;"><b>Enjoy</b></p>
+                    </div>
+                    <hr />
+
+                </div>
+            }*@
+
+        </div>
+
+
+
+    </div>
+    @*<div class="menu-go-to-cart"><span>Go To Cart</span>
+        </div>*@
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>
