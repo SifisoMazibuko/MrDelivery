@@ -1,0 +1,157 @@
+﻿@*@using MrDelivery.ViewModels*@
+@model MrDelivery.ViewModels.CartViewModel
+@{
+    ViewData["Title"] = "AddToCart";
+    Layout = "~/Views/Shared/CartLayout.cshtml";
+}
+
+<style>
+    .cart-totals {
+        background: #fff;
+        border: 0;
+        padding: 20px;
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    }
+    .cart-totals {
+        display: table;
+        width: 100%;
+        border-top: 2px dotted #eee;
+    }
+    .cart-totals .row {
+        display: table-row;
+    }
+        .cart-totals .row span {
+            display: table-cell;
+            font-size: 14px;
+            color: #31313c;
+            padding: 0 0 15px;
+            font-weight: 400;
+        }
+</style>
+<style>
+    .add-to-cart-button {
+        line-height: 80px;
+        height: 80px;
+    }
+
+    .add-to-cart-button {
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        margin: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+    }
+
+    .button.disabled, .button[disabled], .submit-button.is-working, .submit-button[disabled] {
+        background-color: #ddd;
+        color: #888;
+    }
+
+    .submit-button {
+        background: #ffe530;
+        height: auto;
+        font-size: 16px;
+    }
+
+    .submit-button {
+        background: #ffe700;
+        margin: 15px 5px 0;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 0;
+        text-align: center;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        cursor: pointer;
+        display: block;
+        -webkit-transition: background .2s linear,color .2s linear;
+        -o-transition: background .2s linear,color .2s linear;
+        -moz-transition: background .2s linear,color .2s linear;
+        transition: background .2s linear,color .2s linear;
+        border: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        color: #31312c;
+        height: 50px;
+        line-height: 50px;
+        position: relative;
+    }
+</style>
+
+@{
+    decimal sum = 0;
+    decimal service = 20;
+    string r = "R";
+}
+ <form method="post">
+     <div class="container">
+         <br/>
+         @foreach (var itams in ViewBag.itemsAdded)
+         {
+             sum = sum + (@itams.UnitPrice + service);
+             @foreach (var item in ViewBag.itemRes)
+             {
+                 <h2 style="text-align:center">@item.Name</h2>
+             }
+             <div class="cart-totals">
+                 <section style="font-weight:900">@itams.ItemName</section>
+                 <section>@itams.Description</section>
+             </div><br />
+             <div class="cart-totals">
+                 <div class="row">
+                     <span>Subtotal</span>
+                     <p>R @itams.UnitPrice.ToString("N2")</p><br />
+                     <p>Service Fee</p>
+                     <p>R 20.00</p><br />
+                     <span>Total</span>
+                     <p>@r @String.Format("{0:0.00}", sum)</p>
+                 </div>
+             </div>
+         }
+         <br/>
+         <a href="@Url.Action("Index","Home", new { id = Model.Id})" class="submit-button add-to-cart-button">Checkout</a>
+     </div>
+  
+     @*<div class="container">
+         @if (Model.Items.Any())
+         {
+            <div class="row">
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    var item = Model.Items[i];
+                    <article class="row">
+                        <section>@item.ItemName</section>
+                        <section>@item.Description</section>
+                        <section>
+                            <input type="hidden" name="@("Items["+i+"].key")" />
+                            <input type="number" name="@("Items["+i+"].Value")" min="1" value="@item.Quantity" />
+                        </section>
+                        <section>R @item.UnitPrice.ToString("N2")</section>
+                        <section></section>
+                    </article>
+                }
+            </div>
+         }
+         else
+         {
+             <div class="row">
+                 <h2>Cart is Empty</h2>
+             </div>
+         }
+         @foreach (var itam in ViewBag.itemsAdded)
+         {
+            <article class="row">
+                <section>@itam.ItemName</section>
+                <section>@itam.Description</section>
+                <section>R @itam.UnitPrice.ToString("N2")</section>
+                <section></section>
+            </article>
+         }
+     </div>*@
+    
+ </form>  

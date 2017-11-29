@@ -102,12 +102,101 @@
             left: 170px;
         }
     </style>
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 145px;
+            top: 0;
+            width: 80%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+       .close:hover,
+       .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+       }
+    </style>
+    <style>
+        .add-to-cart-button {
+            line-height: 80px;
+            height: 80px;
+        }
+        .add-to-cart-button {
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            margin: 0;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+        }
+        .button.disabled, .button[disabled], .submit-button.is-working, .submit-button[disabled] {
+            background-color: #ddd;
+            color: #888;
+        }
+        .submit-button {
+            background: #ffe530;
+            height: auto;
+            font-size: 16px;
+        }
+        .submit-button {
+            background: #ffe700;
+            margin: 15px 5px 0;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 0;
+            text-align: center;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            cursor: pointer;
+            display: block;
+            -webkit-transition: background .2s linear,color .2s linear;
+            -o-transition: background .2s linear,color .2s linear;
+            -moz-transition: background .2s linear,color .2s linear;
+            transition: background .2s linear,color .2s linear;
+            border: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #31312c;
+            height: 50px;
+            line-height: 50px;
+            position: relative;
+        }
+    </style>
 </head>
 <body style="background-color:#e6e6e6; padding:10px;">
-    <div class="container" style="padding-top:-50px;">
-        <img src="@ViewBag.img" style="border-radius:8px;height:250px;width:100%;background-size:cover;" />
+    <div class="container" style="padding-top:-50px;margin-top:-9px;display:table;">
+        <img src="@ViewBag.img" style="border-radius:8px;height:250px;width:100%;background-size:cover;position:relative;background-position:center center;box-shadow: none;" />
         <div class="top-left">
-            <a asp-controller="Restaurant" asp-action="Restaurants"><p style="font-weight:600;font-size:18px;color:#4bbbf3"> < Back to Restaurants</p></a>
+            <a asp-controller="Restaurant" asp-action="Restaurants"><p style="font-weight:600;font-size:18px;color:#ffffff"> < Back to Restaurants</p></a>
         </div>
         <div class="restaurant-view ">
             <div class="restaurant-items-wrapper">
@@ -125,59 +214,66 @@
                 <h4>Menu</h4>
             </div>
             <div style="margin-bottom:10px;"></div>
-            @foreach (var Model in Model)
-            {
 
-                <div style="border:2px solid #cfcccc;width:50%;height:auto;margin-left:25px;display:inline-block">
-                    <div>
-                        <p style="font-size:16px;margin-top:5px;text-align:center"><b>@Model.MenuType</b></p>
-                       <hr style="border:0.5px solid;"/>
-                        <div class="row" style="margin-left:6px;">
-                            <div class="col-sm-10">
-                                <p style="font-size:16px;"><b>@Model.ItemName</b></p>
-                                <span style="font-size:8px;">@Model.Description</span>
+            <div class="row" style="padding-left:25px;padding-right:25px;">
+                @foreach (var Model in Model)
+            {
+                    <div class="col-lg-6">
+                        <div id="myBtn" style="border:2px solid #cfcccc;height:auto;width:100%;display:inline-block">
+                            <div id="myBtn">
+                                <p style="font-size:16px;margin-top:5px;text-align:center"><b>@Model.MenuType</b></p>
+                                <hr style="border:0.5px solid #cfcccc;" />
+                                <div class="row" style="margin-left:6px;" id="myBtn">
+                                    <div class="col-sm-10">
+                                        <p style="font-size:16px;"><b>@Model.ItemName</b></p>
+                                        <span style="font-size:8px;">@Model.Description</span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p style="font-size:10px;">from</p>
+                                        <p>R @Model.UnitPrice</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <p style="font-size:10px;">from</p>
-                                <p>R @Model.UnitPrice</p>
-                            </div>
+                            <br />
                         </div>
-                    </div>    
+                    </div>
+                    <div style="margin-top:-18px;"></div>
+                    @*</div>*@
                     <br />
-                </div>
-                <div style="margin-top:3px;"></div>
-                @*</div>*@
-            }
-            <br />
+                    <form asp-controller="Products" asp-action="AddToCart">
+                        <div id="myModal" class="modal">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p style="font-size:20px;margin-top:5px;text-align:left"><b>@Model.ItemName</b></p>
+                                <span style="font-size:12px;">@Model.Description</span>
+                                @*<a>@Html.ActionLink("Add To Cart ", "AddToCart", "Products", new { @class = "btn btn-success glyphicon glyphicon-shopping-cart" })</a>*@
 
-            @* <div class="menu-info">
-            @foreach (var item in Model)
-            {
-                <div style="border:2px solid #cfcccc;width:50%;height:auto;margin-left:25px;">
-                    <div>
-                        <p style="font-size:20px;margin-top:5px;"><b>@item.MenuType</b></p><hr />
-                        <p style="border-bottom:2px solid #cfcccc;"></p>
-                        <div class="col-sm-10">
-                            <p style="font-size:16px;"><b>@item.ItemName</b></p>
-                            <span style="font-size:8px;">@item.Description</span>
+                                @*<span class="submit-button add-to-cart-button" disabled="disabled">
+                                    <span></span>
+                                    <span>Add To Cart</span>
+                                    <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
+                                </span>
+                                <input type="submit" class="submit-button add-to-cart-button" value="Add To Cart" name="@Model.Id"/>*@
+                                <a href="@Url.Action("AddToCart","Products", new { id = Model.Id})" class="submit-button add-to-cart-button">
+                                    <span>Add To Cart</span>
+                                    <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-sm-2">
-                            <p style="font-size:10px;">from</p>
-                            <p>R @item.UnitPrice</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p style="font-size:20px;"><b>Enjoy</b></p>
-                    </div>
-                    <hr />
-
-                </div>
-            }*@
-
+                       
+                        <input type="hidden" asp-for="@Model.Id" name="Id" />
+                        <input type="hidden" asp-for="@Model.ItemName" name="itemName" />
+                        <input type="hidden" asp-for="@Model.Description" name="description" />
+                        <input type="hidden" asp-for="@Model.UnitPrice" name="unitPrice" />
+                        <input type="hidden" asp-for="@Model.Quantity" name="quantity" />
+                    </form>                    
+                }
+            </div>          
+           
+           
         </div>
-
-
-
+       
     </div>
     @*<div class="menu-go-to-cart"><span>Go To Cart</span>
         </div>*@
@@ -185,6 +281,33 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"

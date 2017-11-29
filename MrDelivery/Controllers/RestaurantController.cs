@@ -32,45 +32,16 @@ namespace MrDelivery.Controllers
         [HttpGet]
         public IActionResult Menu(string search)
         {
-            //var menu = from r in context.Restaurants
-            //           select r;
-            //ViewBag.details = menu;
-
-            //CartItemViewModel vm = new CartItemViewModel();
-            //var menus = context.Items.Where(m => m.Id == id).FirstOrDefault();
-
-            ////foreach (var i in menus)
-            ////{
-            ////    //vm.Id = i.Id;
-            //vm.ItemName = menus.ItemName;
-            //vm.MenuType = menus.MenuType;
-            //vm.UnitPrice = menus.UnitPirce;
-            //vm.Description = menus.Description;
-            ////}
-            //var res = context.Restaurants.Where(m => m.Id == id).FirstOrDefault();
-            ////foreach (var r in res)
-            ////{
-            ////    //vm.Id = r.Id;
-            //vm.Name = res.Name;
-            //vm.Location = res.Location;
-            //vm.Icon = res.Icon;
-            //vm.ImagePath = res.ImagePath;
-            //vm.ItemType = res.ItemType;
-            //vm.deliveryTime = res.deliveryTime;
-            //}
-
-            //ViewBag.details = menus;
-            //ViewBag.restaurant = res;
-
             var resturantModel = (from r in context.Restaurants
                                   where r.Name == search
                                      join i in context.Items
                                      on r.Id equals i.Id
                                      select new CartItemViewModel
                                      {
+                                        Id = i.Id,
                                         ItemName = i.ItemName,
                                         MenuType = i.MenuType,
-                                        UnitPrice = i.UnitPirce,
+                                        UnitPrice = i.UnitPrice,
                                         Description = i.Description,
 
                                         Name = r.Name,
@@ -78,7 +49,7 @@ namespace MrDelivery.Controllers
                                         Icon = r.Icon,
                                         ImagePath = r.ImagePath,
                                         ItemType = r.ItemType,
-                                        deliveryTime = r.deliveryTime
+                                        deliveryTime = r.deliveryTime,                                                                          
 
                                     });
             foreach(var item in resturantModel)
@@ -98,11 +69,8 @@ namespace MrDelivery.Controllers
             //                                        || p.Desc.Contains(searchProperty)
             //                                        || p.category.Contains(searchProperty)
             //                                        || p.category.StartsWith(searchProperty)
-            //                                        );
-
-
-                return View(resturantModel);
-            
+            //                                        ); 
+            return View(resturantModel);            
         }
 
         protected override void Dispose(bool disposing)

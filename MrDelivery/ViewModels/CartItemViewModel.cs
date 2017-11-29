@@ -7,7 +7,7 @@ namespace MrDelivery.ViewModels
 {
     public class CartItemViewModel
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
@@ -18,5 +18,6 @@ namespace MrDelivery.ViewModels
         public string ItemName { get; set; }
         public string Description { get; set; }
         public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
     }
 }

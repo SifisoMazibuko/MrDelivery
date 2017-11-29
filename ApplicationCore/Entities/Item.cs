@@ -9,6 +9,7 @@ namespace ApplicationCore.Entities
         public string ItemName { get; set; }
         public string MenuType { get; set; }
         public string Description { get; set; }
-        public decimal UnitPirce { get; set; }
+        public decimal UnitPrice { get; set; }
+
     }
 }

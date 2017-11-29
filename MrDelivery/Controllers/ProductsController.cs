@@ -15,8 +15,8 @@ namespace MrDelivery.Controllers
     {
         private MrDeliveryContext context { get; set; }
         private bool _disposeContext = false;
-        public string cartId { get; set; }
-        public const string cartSession = "CartId";
+       // public string cartId { get; set; }
+       // public const string cartSession = "CartId";
 
         public ProductsController(DbContextOptions<MrDeliveryContext> option)
         {
@@ -28,26 +28,54 @@ namespace MrDelivery.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult AddToCart(int id)
+        {
+            
+            ViewBag.itemsAdded = context.Items.Where(i => i.Id == id).GroupBy(x=>x.Id).Select(g => g.First());
+            ViewBag.itemRes = context.Restaurants.Where(i => i.Id == id);
+            //ViewBag.itemsAdded = context.Items.GroupBy(x => x.Id);
+            CartViewModel model = new CartViewModel();
 
+            //foreach(var item in itemsAdded)
+            //{
+            //    model.Id = item.Id;
+            //    model.ItemName = item.ItemName;
+            //    model.Description = item.Description;
+            //    model.UnitPrice = item.UnitPrice;
+            //    model.MenuType = item.MenuType;
+            //}
+            
+            return View(model);
+        }
         [HttpPost]
         public IActionResult AddToCart(CartViewModel model)
         {
             if (model?.Id == null)
             {
-                return RedirectToAction("Action","Home");
+                return RedirectToAction("Index","Home");
             }
-            var item = new Cart();
-            item.Id = model.Id;
-            item.Quantity = model.Quantity;
-            item.dateCreated = model.dateCreated;
-
-            using (context = new MrDeliveryContext())
+            //var item = new Cart();
+            //item.Id = model.Id;
+            //item.Quantity = model.Quantity;
+            //item.dateCreated = model.dateCreated;
+            var errors = ModelState
+                          .Where(x => x.Value.Errors.Count > 0)
+                          .Select(x => new { x.Key, x.Value.Errors })
+                           .ToArray();
+            var itemInCart = new Item();
             {
-                context.Carts.Add(item);
-                context.SaveChanges();
-            }
+                itemInCart.Id = model.Id;
+                itemInCart.ItemName = model.ItemName;
+                itemInCart.Description = model.Description;
+                itemInCart.MenuType = model.MenuType;
+                itemInCart.UnitPrice = model.UnitPrice;
+            };
+            
+            context.Items.Add(itemInCart);
+            context.SaveChanges();
 
-            return View();
+            return View(model);
         }
 
         public void RemoveFromCart(string removeCartID, int removeItemID)

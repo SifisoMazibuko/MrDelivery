@@ -24,8 +24,8 @@ namespace MrDelivery.Controllers
     //[Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly SignInManager<ApplicationUser> _signInManager;
         private MrDeliveryContext context { get; set; }
         public ApplicationCore.Interfaces.Provider.IUserCustomer CustomerProvider { get; set; }
         private bool _disposeContext = false;
