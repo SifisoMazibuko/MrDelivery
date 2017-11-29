@@ -5,7 +5,6 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -216,7 +215,7 @@
             <div style="margin-bottom:10px;"></div>
 
             <div class="row" style="padding-left:25px;padding-right:25px;">
-                @foreach (var Model in Model)
+            @foreach (var Model in Model)
             {
                     <div class="col-lg-6">
                         <div id="myBtn" style="border:2px solid #cfcccc;height:auto;width:100%;display:inline-block">
@@ -237,7 +236,7 @@
                             <br />
                         </div>
                     </div>
-                    <div style="margin-top:-18px;"></div>
+                    <div style="margin-top:-35px;"></div>
                     @*</div>*@
                     <br />
                     <form asp-controller="Products" asp-action="AddToCart">
@@ -269,8 +268,7 @@
                         <input type="hidden" asp-for="@Model.Quantity" name="quantity" />
                     </form>                    
                 }
-            </div>          
-           
+            </div>                    
            
         </div>
        
