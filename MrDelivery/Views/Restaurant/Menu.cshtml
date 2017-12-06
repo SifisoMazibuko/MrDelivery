@@ -108,7 +108,7 @@
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
             padding-top: 100px; /* Location of the box */
-            left: 145px;
+            left: 140px;
             top: 0;
             width: 80%; /* Full width */
             height: 100%; /* Full height */
@@ -144,7 +144,7 @@
     <style>
         .add-to-cart-button {
             line-height: 80px;
-            height: 80px;
+            height: 100px;
         }
         .add-to-cart-button {
             bottom: 0;
@@ -166,7 +166,7 @@
         }
         .submit-button {
             background: #ffe700;
-            margin: 15px 5px 0;
+            margin: 15px 2px 0 0;
             font-size: 14px;
             font-weight: 700;
             padding: 0;
@@ -217,6 +217,7 @@
             <div class="row" style="padding-left:25px;padding-right:25px;">
             @foreach (var Model in Model)
             {
+                    <div style="margin-top:-55px;"></div>
                     <div class="col-lg-6">
                         <div id="myBtn" style="border:2px solid #cfcccc;height:auto;width:100%;display:inline-block">
                             <div id="myBtn">
@@ -233,31 +234,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <br />
                         </div>
-                    </div>
-                    <div style="margin-top:-35px;"></div>
+                    </div><br />
                     @*</div>*@
                     <br />
-                    <form asp-controller="Products" asp-action="AddToCart">
+                    <form method="post">
                         <div id="myModal" class="modal">
                             <!-- Modal content -->
                             <div class="modal-content">
                                 <span class="close">&times;</span>
                                 <p style="font-size:20px;margin-top:5px;text-align:left"><b>@Model.ItemName</b></p>
                                 <span style="font-size:12px;">@Model.Description</span>
-                                @*<a>@Html.ActionLink("Add To Cart ", "AddToCart", "Products", new { @class = "btn btn-success glyphicon glyphicon-shopping-cart" })</a>*@
-
-                                @*<span class="submit-button add-to-cart-button" disabled="disabled">
-                                    <span></span>
+                                @*<a href="@Url.Action("AddToCart","Products", new { id = Model.Id})" class="submit-button add-to-cart-button">
                                     <span>Add To Cart</span>
                                     <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
-                                </span>
-                                <input type="submit" class="submit-button add-to-cart-button" value="Add To Cart" name="@Model.Id"/>*@
-                                <a href="@Url.Action("AddToCart","Products", new { id = Model.Id})" class="submit-button add-to-cart-button">
-                                    <span>Add To Cart</span>
-                                    <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
-                                </a>
+                                </a>*@
+                                <br />
+                               <button class="submit-button add-to-cart-button" type="submit">
+                                   <span>Add To Cart</span>
+                                   <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
+                               </button>
                             </div>
                         </div>
                        
@@ -266,6 +262,7 @@
                         <input type="hidden" asp-for="@Model.Description" name="description" />
                         <input type="hidden" asp-for="@Model.UnitPrice" name="unitPrice" />
                         <input type="hidden" asp-for="@Model.Quantity" name="quantity" />
+                        <input type="hidden" asp-for="@Model.MenuType" name="menuType" />
                     </form>                    
                 }
             </div>                    

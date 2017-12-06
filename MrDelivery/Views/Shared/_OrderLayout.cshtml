@@ -1,0 +1,121 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MrDelivery</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="shortcut icon" href="~/images/mrd-logo-donut.svg" class="logo" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <style>
+        .header-color {
+            background-color: #6dcff6;
+        }
+
+        #increase-header {
+            height: 60px;
+        }
+
+        .availability-box {
+            position: relative;
+            height: 100px;
+            width: 1150px;
+            background-color: #ffa900;
+            margin-top: 70px;
+            border-radius: 8px;
+        }
+
+        .container h3, p {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        h3 {
+            font-weight: bold;
+        }
+
+        .container img {
+            position: absolute;
+            left: 15px;
+            margin-left: 220px;
+            top: 50%;
+            margin-top: -33px;
+            height: 66px;
+        }
+
+        .second {
+            cursor: pointer;
+            font-weight: 700;
+            display: table-cell;
+            vertical-align: middle;
+            text-transform: uppercase;
+            font-size: 18px;
+            text-transform: none;
+            text-align: center;
+            padding-left: 600px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar header-color navbar-fixed-top" id="increase-header">
+        <br />
+        <a asp-action="AddToCart" asp-controller="Products" class="navbar-left pull-left"><p style="color:#000000"> < Back to Cart</p></a>
+
+        <span class="second">Order History</span>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <div class="container body-content navbar-nav navbar-fixed-bottom">
+
+        <footer>
+            <h6>&copy; 2017 - MrDelivery</h6>
+        </footer>
+    </div>
+
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

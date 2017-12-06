@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using MrDelivery.ViewModels;
+using ApplicationCore.Entities;
 
 namespace MrDelivery.Controllers
 {
@@ -72,7 +73,32 @@ namespace MrDelivery.Controllers
             //                                        ); 
             return View(resturantModel);            
         }
+        [HttpPost]
+        public IActionResult Menu(CartItemViewModel model)
+        {
+            var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .Select(x => new { x.Key, x.Value.Errors })
+                         .ToArray();
+            if (ModelState.IsValid)
+            {
+                var itemInCart = new Cart();
+                {
+                    itemInCart.ItemName = model.ItemName;
+                    itemInCart.Description = model.Description;
+                    itemInCart.MenuType = model.MenuType;
+                    itemInCart.UnitPrice = model.UnitPrice;
+                    itemInCart.Id = model.Id;
+                    itemInCart.dateCreated = DateTimeOffset.Now;
+                };
 
+                context.Carts.Add(itemInCart);
+                context.SaveChanges();
+                return RedirectToAction("AddToCart", "Products",new { id = model.Id});
+            }
+
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (_disposeContext)

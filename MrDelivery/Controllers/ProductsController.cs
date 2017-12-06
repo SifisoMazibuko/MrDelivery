@@ -29,13 +29,13 @@ namespace MrDelivery.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(CartViewModel model, int id)
         {
             
             ViewBag.itemsAdded = context.Items.Where(i => i.Id == id).GroupBy(x=>x.Id).Select(g => g.First());
             ViewBag.itemRes = context.Restaurants.Where(i => i.Id == id);
             //ViewBag.itemsAdded = context.Items.GroupBy(x => x.Id);
-            CartViewModel model = new CartViewModel();
+           // CartViewModel model = new CartViewModel();
 
             //foreach(var item in itemsAdded)
             //{
@@ -63,7 +63,7 @@ namespace MrDelivery.Controllers
                           .Where(x => x.Value.Errors.Count > 0)
                           .Select(x => new { x.Key, x.Value.Errors })
                            .ToArray();
-            var itemInCart = new Item();
+            var itemInCart = new Cart();
             {
                 itemInCart.Id = model.Id;
                 itemInCart.ItemName = model.ItemName;
@@ -72,7 +72,7 @@ namespace MrDelivery.Controllers
                 itemInCart.UnitPrice = model.UnitPrice;
             };
             
-            context.Items.Add(itemInCart);
+            context.Carts.Add(itemInCart);
             context.SaveChanges();
 
             return View(model);
@@ -85,7 +85,7 @@ namespace MrDelivery.Controllers
                 try
                 {
                     var myItem = (from c in context.Carts
-                                  where c.Id == removeItemID && c.ItemId == removeItemID
+                                  where c.Id == removeItemID/* && c.ItemNo == removeItemID*/
                                   select c).FirstOrDefault();
                     if (myItem != null)
                     {
@@ -107,7 +107,7 @@ namespace MrDelivery.Controllers
                 try
                 {
                     var myItem = (from c in context.Carts
-                                  where c.Id == updateCartID && c.ItemId == updateItemCart
+                                  where c.Id == updateCartID/* && c.ItemNo == updateItemCart*/
                                   select c).FirstOrDefault();
                     if (myItem != null)
                     {

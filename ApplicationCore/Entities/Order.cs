@@ -10,7 +10,7 @@ namespace ApplicationCore.Entities
         public DateTimeOffset Created { get; set; }
         public String Status{ get; set; }
         public DateTimeOffset Delivery { get; set; }
-        public virtual Customer Customer { get; set; }
+        //public virtual Customer Customer { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
     }
 }

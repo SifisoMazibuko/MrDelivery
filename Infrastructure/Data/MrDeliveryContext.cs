@@ -25,7 +25,7 @@ namespace Infrastructure.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Item> Items { get; set; }
         //public DbSet<Group> Groups { get; set; }
-        //public DbSet<Order> Orders { get; set; }
+        public DbSet<Order> Order { get; set; }
         //public DbSet<OrderDetail> OrderDetails { get; set; }
         //public DbSet<Payment> Payments { get; set; }
         //public DbSet<Address> Addresses { get; set; }

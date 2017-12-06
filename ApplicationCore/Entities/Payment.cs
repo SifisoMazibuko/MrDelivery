@@ -6,7 +6,6 @@ namespace ApplicationCore.Entities
 {
     public class Payment : BaseEntity
     {
-        public int Id { get; set; }
         public String PaymentOption { get; set; }
         public String BillingAddress { get; set; }
         public String City { get; set; }
