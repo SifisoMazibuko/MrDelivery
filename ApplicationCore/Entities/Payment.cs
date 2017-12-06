@@ -6,13 +6,11 @@ namespace ApplicationCore.Entities
 {
     public class Payment : BaseEntity
     {
-        public String PaymentOption { get; set; }
-        public String BillingAddress { get; set; }
-        public String City { get; set; }
-        public String State { get; set; }
-        public int ZipCode { get; set; }
-        public String CardName { get; set; }
-        public int ExpiryMonth { get; set; }
-        public int ExpiryDate { get; set; }
+        public string Name { get; set; }
+        public string cardNumber { get; set; }
+        public string month { get; set; }
+        public string year { get; set; }
+        public string securityCode { get; set; }
+        public string Amount { get; set; }
     }
 }

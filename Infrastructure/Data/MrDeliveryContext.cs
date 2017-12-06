@@ -27,7 +27,7 @@ namespace Infrastructure.Data
         //public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Order { get; set; }
         //public DbSet<OrderDetail> OrderDetails { get; set; }
-        //public DbSet<Payment> Payments { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         //public DbSet<Address> Addresses { get; set; }
 
 
