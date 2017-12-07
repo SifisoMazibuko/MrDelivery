@@ -65,11 +65,12 @@ namespace MrDelivery.Controllers
                            .ToArray();
             var itemInCart = new Cart();
             {
-                itemInCart.Id = model.Id;
+                //itemInCart.Id = model.Id;
                 itemInCart.ItemName = model.ItemName;
                 itemInCart.Description = model.Description;
                 itemInCart.MenuType = model.MenuType;
                 itemInCart.UnitPrice = model.UnitPrice;
+                itemInCart.Quantity = model.Quantity;
             };
             
             context.Carts.Add(itemInCart);
@@ -78,19 +79,18 @@ namespace MrDelivery.Controllers
             return View(model);
         }
 
-        public void RemoveFromCart(string removeCartID, int removeItemID)
+        public IActionResult RemoveFromCart(int id)
         {
-            using (context = new MrDeliveryContext())
-            {
-                try
+            try
                 {
-                    var myItem = (from c in context.Carts
-                                  where c.Id == removeItemID/* && c.ItemNo == removeItemID*/
-                                  select c).FirstOrDefault();
+                var myItem = (from c in context.Carts
+                              where c.Id == id/* && c.ItemNo == removeItemID*/
+                              select c).First();
                     if (myItem != null)
                     {
                         context.Carts.Remove(myItem);
                         context.SaveChanges();
+                    ViewBag.message = "Cart is Empty";
                     }
 
                 }
@@ -98,7 +98,13 @@ namespace MrDelivery.Controllers
                 {
                     throw new Exception("Error: Unable to remove from cart " + err.Message.ToString());
                 }
-            }
+            
+         
+            return RedirectToAction("AddToCartUpdate");
+        }
+        public IActionResult AddToCartUpdate()
+        {
+            return View();
         }
         public void UpdateCart(int updateCartID, int updateItemCart, int quantity)
         {

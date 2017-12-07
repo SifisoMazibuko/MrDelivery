@@ -75,7 +75,7 @@
                     <div class="col-sm-10">
                         <div class="inner-addon left-addon">
                             <i class="glyphicon glyphicon-search"></i>
-                            <input style="height:40px;width:550%;border-radius: 10px;" class="form-control filterinput" type="search" placeholder="Search restaurant, cuisine and preference" onkeyup="myFunction()" id="myInput"><br />
+                            <input style="height:40px;width:550%;border-radius: 10px;" class="form-control" type="text" placeholder="Search restaurant, cuisine and preference" onkeyup="myFunction()" id="myInput"><br />
                         </div>
                     </div>
                 </div>
@@ -107,6 +107,41 @@
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
+        <script type="text/javascript">
+            // quick search regex
+            var qsRegex;
+
+            // init Isotope
+            var $grid = $('.index-wrap').isotope({
+                itemSelector: '.topDiv',
+                layoutMode: 'fitRows',
+                filter: function () {
+                    return qsRegex ? $(this).text().match(qsRegex) : true;
+                }
+            });
+
+            // use value of search field to filter
+            var $quicksearch = $('.quicksearch').keyup(debounce(function () {
+                qsRegex = new RegExp($quicksearch.val(), 'gi');
+                $grid.isotope();
+            }, 200));
+
+            // debounce so filtering doesn't happen every millisecond
+            function debounce(fn, threshold) {
+                var timeout;
+                return function debounced() {
+                    if (timeout) {
+                        clearTimeout(timeout);
+                    }
+                    function delayed() {
+                        fn();
+                        timeout = null;
+                    }
+                    timeout = setTimeout(delayed, threshold || 100);
+                }
+            }
+
+        </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
@@ -114,6 +149,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

@@ -7,6 +7,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using MrDelivery.ViewModels;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace MrDelivery.Controllers
 {
@@ -84,12 +85,14 @@ namespace MrDelivery.Controllers
             {
                 var itemInCart = new Cart();
                 {
+                    itemInCart.Id = model.Id;
                     itemInCart.ItemName = model.ItemName;
                     itemInCart.Description = model.Description;
                     itemInCart.MenuType = model.MenuType;
                     itemInCart.UnitPrice = model.UnitPrice;
-                    itemInCart.Id = model.Id;
+                    itemInCart.CartId = (new Random()).Next(1, 5);
                     itemInCart.dateCreated = DateTimeOffset.Now;
+                    //itemInCart.Quantity = model.Quantity;
                 };
 
                 context.Carts.Add(itemInCart);
@@ -97,8 +100,11 @@ namespace MrDelivery.Controllers
                 return RedirectToAction("AddToCart", "Products",new { id = model.Id});
             }
 
+            ViewBag.menu = model;
             return View();
         }
+
+      
         protected override void Dispose(bool disposing)
         {
             if (_disposeContext)

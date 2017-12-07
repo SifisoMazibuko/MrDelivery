@@ -77,12 +77,71 @@
             padding: 0px 0px 0px 90px;
         }
 </style>
+<style>
+    div.connect-cat {
+        float: left;
+        width: 125px;
+        height: 130px;
+        overflow: hidden;
+        margin: 0 16px 20px 16px;
+        border: 1px solid #ffffff;
+        border-right: 1px solid #dedede;
+        border-bottom: 1px solid #dedede;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+        div.connect-cat:hover {
+            border: 1px solid #dedede;
+            -webkit-background-clip: padding-box;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.398438) 0px 4px 12px 0px, rgba(255, 255, 255, 0.496094) 0px 1px 0px 0px inset;
+            box-shadow: rgba(0, 0, 0, 0.398438) 0px 4px 12px 0px, rgba(255, 255, 255, 0.496094) 0px 1px 0px 0px inset;
+            background-clip: padding-box;
+        }
+
+    #box {
+        margin: 20px;
+    }
+
+    }
+</style>
+
+    @*@foreach (var item in ViewBag.res)
+    {
+
+        <a href="@Url.Action("Menu", "Restaurant", new { search = item.Name })">
+            
+                <div class="index-wrap">
+                    <div class="image-wrap topDiv">
+                        <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
+                    </div>
+                    <div class="nav navbar-left innerDiv">
+                        <br />
+                        <div class="restaurant-logo pull-left">
+                            <span><img src="@item.Icon" lazy-img="@item.Icon" /></span>
+                        </div>
+                        <div class="pull-left">
+                            <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
+                            <p style="font-size:10px;float:left;">@item.ItemType</p>
+                        </div>
+                     
+                    </div>
+                </div>         
+        </a>
+    }*@
+
+
+<ul id="myUL" style="color:#ffffff">
+    <li>
 
     @foreach (var item in ViewBag.res)
     {
-       
-        <a href="@Url.Action("Menu","Restaurant",new { search = item.Name})">
-            <div class="index-wrap" id="myTable">
+
+        <a href="@Url.Action("Menu", "Restaurant", new { search = item.Name })">
+
+            <div class="index-wrap">
                 <div class="image-wrap topDiv">
                     <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
                 </div>
@@ -95,35 +154,28 @@
                         <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
                         <p style="font-size:10px;float:left;">@item.ItemType</p>
                     </div>
-                    @*<p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
-                        <p style="font-size:10px;float:left;">@item.ItemType</p>*@
 
                 </div>
             </div>
         </a>
     }
+    </li>
+</ul>
 
 <script type="text/javascript">
     function myFunction() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
+        var input, filter, ul, li, a, i;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
             }
         }
     }
 </script>
-
-
-

@@ -1,8 +1,9 @@
 ﻿@*@model IEnumerable<ApplicationCore.Entities.Restaurants>*@
+@*@model IEnumerable<MrDelivery.ViewModels.CartItemViewModel>*@
+@using MrDelivery.ViewModels
 @model IEnumerable<MrDelivery.ViewModels.CartItemViewModel>
-@*@model MrDelivery.ViewModels.CartItemViewModel*@
 @{
-    Layout = null;
+        Layout = null;
 }
 
 <html>
@@ -62,10 +63,10 @@
         .menu-go-to-cart {
             width: 100%;
             position: fixed;
-            border-top: 1px solid #eee;
+border-top: 1px solid #eee;
             border-radius: 2px;
             box-shadow: 0 0 5px rgba(0,0,0,.05);
-            background: 0 0;
+background: 0 0;
             padding: 0;
             bottom: 0;
         }
@@ -76,19 +77,19 @@
     }
 
         .restaurant-logo span {
-            display: block;
-        }
+    display: block;
+}
 
         .restaurant-logo img {
-            width: 60px;
-            height: auto;
-            border-radius: 100px;
-            margin-right: 200PX;
+    width: 60px;
+    height: auto;
+    border-radius: 100px;
+    margin-right: 200PX;
             float: left;
-            top: -60px;
-            left: -210px;
-            align-content:flex-start;
-        }
+    top: -60px;
+    left: -210px;
+    align-content:flex-start;
+}
         .nav .pull-left {
             padding: 0px 0px 0px 90px;
         }
@@ -106,7 +107,7 @@
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+z-index: 1; /* Sit on top */
             padding-top: 100px; /* Location of the box */
             left: 140px;
             top: 0;
@@ -114,7 +115,7 @@
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
             background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
 
         /* Modal Content */
@@ -179,8 +180,8 @@
             -webkit-transition: background .2s linear,color .2s linear;
             -o-transition: background .2s linear,color .2s linear;
             -moz-transition: background .2s linear,color .2s linear;
-            transition: background .2s linear,color .2s linear;
-            border: 0;
+transition: background .2s linear,color .2s linear;
+border: 0;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -191,6 +192,11 @@
         }
     </style>
 </head>
+@{
+    decimal sum = 0;
+string r = "R";
+int cartCount = 0;
+}
 <body style="background-color:#e6e6e6; padding:10px;">
     <div class="container" style="padding-top:-50px;margin-top:-9px;display:table;">
         <img src="@ViewBag.img" style="border-radius:8px;height:250px;width:100%;background-size:cover;position:relative;background-position:center center;box-shadow: none;" />
@@ -216,7 +222,8 @@
 
             <div class="row" style="padding-left:25px;padding-right:25px;">
             @foreach (var Model in Model)
-            {
+        {
+            sum = Model.UnitPrice * Model.Quantity;
                     <div style="margin-top:-55px;"></div>
                     <div class="col-lg-6">
                         <div id="myBtn" style="border:2px solid #cfcccc;height:auto;width:100%;display:inline-block">
@@ -249,11 +256,18 @@
                                     <span>Add To Cart</span>
                                     <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
                                 </a>*@
+                                <br/>
+                                
                                 <br />
                                <button class="submit-button add-to-cart-button" type="submit">
                                    <span>Add To Cart</span>
                                    <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
-                               </button>
+                                   
+                                   @*<span class="pull-right" style="padding-right:15px;">R @String.Format("{0:0.00}", sum) </span>*@
+                                </button>
+                                @*R @Math.Round(Model.Quantity * Model.UnitPrice, 2).ToString("N2")
+                                <div>@Model.Total()</div>
+                                Quantity<input type="submit" name="updatebutton" class="btn-primary" value="Update" />*@
                             </div>
                         </div>
                        
@@ -265,7 +279,19 @@
                         <input type="hidden" asp-for="@Model.MenuType" name="menuType" />
                     </form>                    
                 }
-            </div>                    
+            </div> 
+
+            @*@foreach (var itemz in Model)
+            {
+                @for (int i = 0; i < itemz.Items.Count; i++)
+                {
+                    var item = itemz.Items[i];
+                    <input type="hidden" name="@("Items["+i+"]")" value="@item.Id" />
+                    <input type="number" name="@("Items["+ i +"].Value")" value="@item.Quantity" />
+                                    <section>R @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</section>
+                <div>@itemz.Total()</div>
+                }
+            }*@
            
         </div>
        

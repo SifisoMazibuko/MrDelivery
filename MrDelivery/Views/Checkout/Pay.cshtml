@@ -70,7 +70,8 @@
         background-position: center center;
     }
     .security-code {
-        background: url('../images/pay/cvv.png');
+        /*background: url('../images/pay/cvv.png');*/
+        background-image: url('../images/pay/cvv.png');
         background-repeat: no-repeat;
     }
     .payment-we-accept .card-icons {
@@ -126,7 +127,7 @@
             </div>
             <h3>Card Number</h3>
             <div class="rounded-shadow-box">
-                <input type="text" name="cardNumber" value="" maxlength="14" />
+                <input type="text" name="cardNumber" value="" maxlength="14" class="creditCartText" id="creditCartText" />
                 <span asp-validation-for="cardNumber" class="text-danger col-md-8"></span>
             </div>
             <div>
@@ -182,4 +183,21 @@
                     $("#divLoading").hide();
                 });
     }
+
+    $("#creditCartText").keyup(function () {
+        var digit = $(this).val().split("-").join("");
+        if (digit.length > 0) {
+            digit = digit.match(new RegExp('.{1.4}', 'g')).join("-");
+        }
+        $(this).val(foo);
+    });
+</script>
+<script type="text/javascript" language="javascript">
+    $("#creditCartText").keyup(function () {
+        var digit = $(this).val().split("-").join("");
+        if (digit.length > 0) {
+            digit = digit.match(new RegExp('.{1.4}', 'g')).join("-");
+        }
+        $(this).val(foo);
+    });
 </script>

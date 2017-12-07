@@ -6,6 +6,7 @@ namespace ApplicationCore.Entities
 {
     public class Cart:BaseEntity
     {
+        public int CartId { get; set; }
         public string ItemName { get; set; }
         public string Description { get; set; }
         public string MenuType { get; set; }
@@ -15,8 +16,8 @@ namespace ApplicationCore.Entities
         //public int ItemNo { get; set; }
         //public virtual Item Item { get; set; }
 
-        //public List<Item> _items = new List<Item>();
-        //public IReadOnlyCollection<Item> items => _items.AsReadOnly();
+        public List<Item> _items = new List<Item>();
+        public IReadOnlyCollection<Item> items => _items.AsReadOnly();
         
     }
 }
