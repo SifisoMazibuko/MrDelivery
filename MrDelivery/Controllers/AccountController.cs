@@ -217,33 +217,36 @@ namespace MrDelivery.Controllers
         public IActionResult MyAccount(int? userId)
         {
             userId = Convert.ToInt32(TempData["customerId"]);
-            var cus = new RegisterViewModel();
+            var cus = new IndexViewModel();
             var customermodel = context.Customers.Where(c => c.Id == userId).ToList();
             foreach (var item in customermodel)
             {
-                cus.Id = item.Id;
-                cus.firstName = item.firstName;
-                cus.lastName = item.lastName;
-                cus.phoneNumber = item.phoneNumber;
-                cus.password = item.password;
-                cus.confirmPassword = item.confirmPassword;
+                cus.Username = item.firstName;
                 cus.email = item.email;
+                cus.phoneNumber = item.phoneNumber;
             }
             return View(cus);
         }
         [HttpPost]
-        public IActionResult MyAccount(IndexViewModel model)
+        public IActionResult MyAccount(IndexViewModel model, int userId)
         {
+            userId = Convert.ToInt32(305936821);
             if (ModelState.IsValid)
             {
                 var user = new Customer();
                 {
-                    user.email = model.Email;
-                    user.email = model.Username;
-                    user.phoneNumber = model.PhoneNumber;
+                    user = context.Customers.Find(userId);
+                    user.email = model.email;
+                    user.firstName = model.Username;
+                    user.phoneNumber = model.phoneNumber;
                 };
-                context.Customers.Add(user);
-                context.SaveChanges();;
+                
+                context.Entry(user).State = EntityState.Modified;
+                context.SaveChanges();
+                model.email = string.Empty;
+                model.Username = string.Empty;
+                model.phoneNumber = string.Empty;
+                TempData["success"] = "Successfully updated!";
                 return View(model);
             }
             return View();
@@ -254,46 +257,45 @@ namespace MrDelivery.Controllers
         public IActionResult ChangePassword(int? userId)
         {
             userId = Convert.ToInt32(TempData["customerId"]);
-            var cus = new RegisterViewModel();
+            var cus = new ChangePasswordViewModel();
             var customermodel = context.Customers.Where(c => c.Id == userId).ToList();
             foreach (var item in customermodel)
             {
-                cus.Id = item.Id;
-                cus.firstName = item.firstName;
-                cus.lastName = item.lastName;
-                cus.phoneNumber = item.phoneNumber;
                 cus.password = item.password;
                 cus.confirmPassword = item.confirmPassword;
-                cus.email = item.email;
             }
             return View(cus);
         }
         [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        public IActionResult ChangePassword(ChangePasswordViewModel model, int userId)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            userId = Convert.ToInt32(305936821);
             if (ModelState.IsValid)
             {
                 var user = new Customer();
                 {
+                    user = context.Customers.Find(userId);
                     user.password = model.password;
                     user.confirmPassword = model.confirmPassword;
                 };
-                context.Customers.Add(user);
+
+                context.Entry(user).State = EntityState.Modified;
                 context.SaveChanges();
-                StatusMessage = "Your password has been changed.";
+                model.password = string.Empty;
+                model.confirmPassword = string.Empty;
+                TempData["success"] = "Your password has been changed.";
                 return View(model);
-               
             }
             return View();
            
         }
 
-        public IActionResult SendVerificationEmail()
+        public IActionResult SendVerificationEmail(RegisterViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Index));
         }

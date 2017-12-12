@@ -14,11 +14,11 @@ namespace MrDelivery.ViewModels
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [Phone]
         [Display(Name = "Phone number")]
-        public string PhoneNumber { get; set; }
+        public string phoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
     }

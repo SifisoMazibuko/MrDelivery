@@ -40,5 +40,6 @@ namespace MrDelivery.ViewModels.Account
         public String phoneNumber { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
+        public string StatusMessage { get; set; }
     }
 }
