@@ -1,10 +1,45 @@
-﻿
+﻿@using Infrastructure.Data
 @{
     ViewData["Title"] = "_LoginPartial";
 }
+<style>
+    ul li a {
+        font-size:20px;
+    }
+    .smile {
+        position: relative;
+        float: left;
+        height: 20px;
+        border-radius: 10%;
+        background-color: #00ffff;
+        background-image: url('~/images/smile.jpg');
+    }
+</style>
+@if (TempData["Firstname"] != null)
+{
+    <ul class="nav navbar-nav">
+        <li class="text"><a>FREE DELIVERY ON FIRST ORDER</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="" asp-controller="Order" asp-action="Index"> My Order </a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="MyAccount"> My Account</a></li>
+        <li><a>Hi @TempData["Firstname"] </a></li>
+        <li><a><img src="~/images/smile.jpg" class="smile" /></a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="Index">Logout</a></li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav">
+        <li class="text"><a asp-area="" asp-controller="Home" asp-action="Index">FREE DELIVERY ON FIRST ORDER</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" id="box">
+        <li style="color:#ffffff;font-weight:bold"><a asp-area="" asp-controller="Account" asp-action="Login">LOGIN</a></li>
+        <li style="background-color:#00ffff;color:#000000;font-weight:bold"><a asp-area="" asp-controller="Account" asp-action="Register">SIGNUP</a></li>
+    </ul>
+}
 
-
-@if (ViewData["cusId"] != null)
+@*@if (ViewData["cusId"] != null)
  {
      <ul class="nav navbar-nav navbar-right">
           <li><a>Welcome @ViewData["cusName"] </a></li>
@@ -20,4 +55,4 @@ else
         <li style="color:#ffffff;font-weight:bold"><a asp-area="" asp-controller="Account" asp-action="Login">LOGIN</a></li>
         <li style="background-color:#00ffff;color:#000000;font-weight:bold"><a asp-area="" asp-controller="Account" asp-action="Register">SIGNUP</a></li>
     </ul>
-}
+}*@

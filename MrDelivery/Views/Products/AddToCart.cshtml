@@ -106,76 +106,40 @@
              <div class="cart-totals">
                  @*<button asp-action="RemoveFromCart" asp-controller="Products" asp-route-id="@itams.Id" class="btn btn-default"><span class="close">&times;</span></button>*@
                  <a asp-action="RemoveFromCart" asp-controller="Products" asp-route-id="@itams.Id" class="close"><span>&times;</span></a>       
-         @*<span class="close">&times;</span>*@
+                  @*<span class="close">&times;</span>*@
                  <section style="font-weight:900">@itams.ItemName</section>
                  <section>@itams.Description</section>
                 
              </div><br />
              <div class="cart-totals">
                  <div class="row">
-                     <span>Subtotal</span>
-                     <p>@r @itams.UnitPrice.ToString("N2")</p><br />
-                     <p>Service Fee</p>
-                     <p>@r 20.00</p><br />
-                     <span>Total</span>
-                     <p>@r @String.Format("{0:0.00}", sum * Quantity)</p>
-                     @*<p>R @String.Format("{0:0.00}", (itams.UnitPrice * Quantity))</p>*@
-                     @*<p>@Math.Round(itams.UnitPrice * Quantity, 2).ToString("N2")</p>*@
+                     <span style="font-weight:700">Subtotal</span>
+                     @*<p>@r @itams.UnitPrice.ToString("N2")</p><br />*@
+                         <p id="price"><span style="color:#fff;">MRP-></span> @r @itams.UnitPrice.ToString("N2")  </p>
+                         <p >Service Fee</p>
+                         <p>@r 20.00</p><br />
+                         @*<span>Total</span>
+                         @*<p id="Totprice">@r @String.Format("{0:0.00}", sum * Quantity)</p>*@
+                         <p id="amount"> Total Price: @r @String.Format("{0:0.00}", sum * Quantity) </p>                 
                  </div>
                 
              </div>
-            @*<input type="number" name="Quantity" style="max-width:170px" min="1"  value="@Quantity" />
-            <input type="submit" name="updatebutton" class="btn-primary" value="Update" />
-            <a href="@Url.Action("AddToCart","Products",new { id = Model.Id})" class="submit-button add-to-cart-button">Update</a>
-            <input type="hidden" asp-for="@Model.Quantity" name="quantity" />*@
+            
+            <h2>Quantity</h2>
+            <div style="display:inline-block">
+                @*<input name="quantity" type="hidden" value="-1" onchange='getamount(this.value);'/>
+                <button type="button" class="quantity-left-minus btn btn-default" id="quantityMinusId" data-type="minus" onchange='getamount(this.value);'><span class="glyphicon glyphicon-minus"></span></button>*@
+                <input type="text" name='item quantity' id='item' class="form-control input-number" value="1" min="1" max="100" onchange='getamount(this.value);' >
+                <input type="hidden" asp-for="@Model.Quantity" name="quantity" onchange='getamount(this.value);'/>
+                @*<input name="quantity" type="hidden" value="1" onchange='getamount(this.value);'/>
+                <button type="button" class="quantity-right-plus btn btn-default" id="quantityAddId" data-type="plus" onchange='getamount(this.value);'><span class="glyphicon glyphicon-plus"></span></button>*@
 
-            <h1>Quantity</h1>
-            <input name="quantity" type="hidden" value="-1" />
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></button>
-            <input name="quantity" type="hidden" value="1" />
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
-         
-         }
-         <br/>
-         <a href="@Url.Action("Checkout","Checkout", new { id = Model.Id})" class="submit-button add-to-cart-button">Checkout</a>
-     </div>
-  
-     @*<div class="container">
-         @if (Model.Items.Any())
-         {
-            <div class="row">
-                @for (int i = 0; i < Model.Items.Count; i++)
-                {
-                    var item = Model.Items[i];
-                    <article class="row">
-                        <section>@item.ItemName</section>
-                        <section>@item.Description</section>
-                        <section>
-                            <input type="hidden" name="@("Items["+i+"].key")" />
-                            <input type="number" name="@("Items["+i+"].Value")" min="1" value="@item.Quantity" />
-                        </section>
-                        <section>R @item.UnitPrice.ToString("N2")</section>
-                        <section></section>
-                    </article>
-                }
             </div>
+            
          }
-         else
-         {
-             <div class="row">
-                 <h2>Cart is Empty</h2>
-             </div>
-         }
-         @foreach (var itam in ViewBag.itemsAdded)
-         {
-            <article class="row">
-                <section>@itam.ItemName</section>
-                <section>@itam.Description</section>
-                <section>R @itam.UnitPrice.ToString("N2")</section>
-                <section></section>
-            </article>
-         }
-     </div>*@
+         <br/><br/>
+         <a href="@Url.Action("Checkout","Checkout", new { id=Model.Id})" class="submit-button add-to-cart-button" id="amount">Checkout</a>
+     </div>
     
  </form>  
 <environment include="Development">
@@ -209,4 +173,82 @@
             }
         }
     </script>
+    <script  type="text/javascript">
+        function update() {
+            var quantitycount = 0;
+            var price = document.getElementById("Unitprice").value;
+            var quantity = document.getElementById("quantity").value;
+
+            var addQuantityButton = document.getElementById('quantityAddId');
+            var minusQuantityButton = document.getElementById('quantityMinusId');
+
+            var Totalprice = price * quantity;
+
+            addQuantityButton.addEventListener('click', function () {
+                alert('Message from add quantity button');
+                $('#quantity').val(quantity + 1);
+            }, false);
+
+            minusQuantityButton.addEventListener('click', function () {
+                alert('Message from minus quantity button');
+                if (quantity > 0) {
+                    $('#quantity').val(quantity - 1);
+                }
+            }, false);
+
+            document.getElementById("TotalPrice").value = Totalprice
+
+        }        
+    </script>
 </environment>
+
+<script>
+     function getamount(value) {
+            var url = '@Url.Action("Checkout", "Checkout", new { id = Model.Id })';
+            var service = 20.00;
+            var price = $("#price").html().replace(/[^\d.]/g, '');
+            var amount = parseFloat(value) * parseFloat(price) + service;
+            //alert(amount);
+            $("#amount").html(" Total Price: R " + amount);
+            $.post(url, null,
+                function (data) {
+                    $("#amount")[0].innerHTML = data;
+             });
+     }
+
+     $(document).ready(function () {
+
+            var quantitiy = 0;
+            $('.quantity-right-plus').click(function (e) {
+
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                var quantity = parseInt($('#item').val());
+
+                // If is not undefined
+
+                $('#item').val(quantity + 1);
+                // Increment
+
+            });
+
+            $('.quantity-left-minus').click(function (e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                var quantity = parseInt($('#item').val());
+
+                // If is not undefined
+
+                // Increment
+                if (quantity > 0) {
+                    $('#item').val(quantity - 1);
+                }
+            });
+
+        });
+
+
+
+</script>

@@ -32,7 +32,7 @@ namespace MrDelivery.Controllers
         public IActionResult AddToCart(CartViewModel model, int id)
         {
             
-            ViewBag.itemsAdded = context.Items.Where(i => i.Id == id).GroupBy(x=>x.Id).Select(g => g.First());
+            ViewBag.itemsAdded = context.Carts.Where(i => i.Id == id).GroupBy(x=>x.Id).Select(g => g.First());
             ViewBag.itemRes = context.Restaurants.Where(i => i.Id == id);
             //ViewBag.itemsAdded = context.Items.GroupBy(x => x.Id);
            // CartViewModel model = new CartViewModel();
@@ -65,14 +65,13 @@ namespace MrDelivery.Controllers
                            .ToArray();
             var itemInCart = new Cart();
             {
-                //itemInCart.Id = model.Id;
+                itemInCart.Id = model.Id;
                 itemInCart.ItemName = model.ItemName;
                 itemInCart.Description = model.Description;
                 itemInCart.MenuType = model.MenuType;
                 itemInCart.UnitPrice = model.UnitPrice;
                 itemInCart.Quantity = model.Quantity;
             };
-            
             context.Carts.Add(itemInCart);
             context.SaveChanges();
 

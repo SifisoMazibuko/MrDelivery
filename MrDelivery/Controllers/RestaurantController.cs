@@ -75,30 +75,46 @@ namespace MrDelivery.Controllers
             return View(resturantModel);            
         }
         [HttpPost]
-        public IActionResult Menu(CartItemViewModel model)
+        public IActionResult Menu(CartItemViewModel model, int userId)
         {
+            userId = Convert.ToInt32(TempData["customerId"]);
             var errors = ModelState
                         .Where(x => x.Value.Errors.Count > 0)
                         .Select(x => new { x.Key, x.Value.Errors })
                          .ToArray();
-            if (ModelState.IsValid)
+            if (userId > 0)
             {
-                var itemInCart = new Cart();
+                if (ModelState.IsValid)
                 {
-                    itemInCart.Id = model.Id;
-                    itemInCart.ItemName = model.ItemName;
-                    itemInCart.Description = model.Description;
-                    itemInCart.MenuType = model.MenuType;
-                    itemInCart.UnitPrice = model.UnitPrice;
-                    itemInCart.CartId = (new Random()).Next(1, 5);
-                    itemInCart.dateCreated = DateTimeOffset.Now;
-                    //itemInCart.Quantity = model.Quantity;
-                };
+                    var itemInCart = new Cart();
+                    {
+                        itemInCart.Id = model.Id;
+                        itemInCart.ItemName = model.ItemName;
+                        itemInCart.Description = model.Description;
+                        itemInCart.MenuType = model.MenuType;
+                        itemInCart.UnitPrice = model.UnitPrice;
+                        itemInCart.CartId = (new Random()).Next(1, 5);
+                        itemInCart.dateCreated = DateTimeOffset.Now;
+                        //itemInCart.Quantity = model.Quantity;
+                    };
+                    var order = new Order();
+                    {
+                        order.Id = userId;
+                        order.OrderName = model.ItemName;
+                        order.Created = DateTimeOffset.Now;
+                        order.Status = "pending";
+                    };
 
-                context.Carts.Add(itemInCart);
-                context.SaveChanges();
-                return RedirectToAction("AddToCart", "Products",new { id = model.Id});
+                    context.Order.Add(order);
+                    context.Carts.Add(itemInCart);
+                    context.SaveChanges();
+                    return RedirectToAction("AddToCart", "Products", new { id = model.Id });
+                }
             }
+            else {
+                return RedirectToAction("Login", "Account");
+            }
+               
 
             ViewBag.menu = model;
             return View();

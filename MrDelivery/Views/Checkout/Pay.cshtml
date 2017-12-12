@@ -70,18 +70,13 @@
         background-position: center center;
     }
     .security-code {
-        /*background: url('../images/pay/cvv.png');*/
-        background-image: url('../images/pay/cvv.png');
+        background: url('../../images/pay/cvv.png');
         background-repeat: no-repeat;
     }
     .payment-we-accept .card-icons {
-        /*background-image: url('~/wwwroot/images/pay/payment.png');
-        background-repeat: no-repeat;
-        background-position: center center;
-        height: 2.5em;
-        margin-bottom: 1em;*/
         position: relative;
         background: url('../images/pay/paymentgate.png');
+        background-image: url('../../images/pay/payment.png');
         background-repeat: no-repeat;
         background-position: center center;
         width: 35%;
@@ -96,8 +91,8 @@
     }
 </style>
 @{
-    decimal sum = 0;
-    decimal service = 20;
+//decimal sum = 0;
+//decimal service = 20;
 }
 <div class="row">
     @*<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
@@ -113,13 +108,14 @@
     <form asp-action="Pay" asp-controller="Checkout" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="container col-sm-8 col-md-8 col-lg-8">
-            @foreach (var item in ViewBag.amount)
+            @*@foreach (var item in ViewBag.amount)
             {
-                sum = sum + (item.UnitPrice + service);
-            }
+                sum = (item.UnitPrice + service);*@
+            
             <div class="rounded-shadow-box">
-                <input type="text" name="Amount" style="text-align:center;color:#000000" value="@String.Format("{0:0.00}", sum)" readonly/>
+                <input type="text" name="Amount" style="text-align:center;color:#000000" value="@ViewBag.uprice" readonly/>
             </div>
+               
             <h3>Name on Card</h3>
             <div class="rounded-shadow-box">
                 <input type="text" name="Name" value="" />

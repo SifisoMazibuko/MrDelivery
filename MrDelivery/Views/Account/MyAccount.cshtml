@@ -1,0 +1,55 @@
+﻿@model MrDelivery.ViewModels.Account.RegisterViewModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<style>
+    #change {
+        margin-top: 20px;
+        margin-left: 150px;
+    }
+    input {
+        text-align: left;
+    }
+</style>
+@*@Html.Partial("_StatusMessage", Model.StatusMessage)*@
+<div class="row" id="change">
+    <h2>@ViewData["Title"]</h2>
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="email">Username</label>
+                <input asp-for="email" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                <br/>   
+                    <input asp-for="email" class="form-control" />
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                }
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phoneNumber"></label>
+                <input asp-for="phoneNumber" class="form-control" />
+                <span asp-validation-for="phoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success" style="width:100%">Save</button>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+

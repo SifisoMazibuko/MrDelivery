@@ -19,8 +19,8 @@ input value {
 
 .driverBackground {
     position: relative;
-    background: url('~/images/car-driver.jpg');
-    background-image: url('~/images/car-driver.jpg');
+    background: url('../../images/car-driver.jpg');
+    background-image: url('../../images/car-driver.jpg');
     background-repeat: no-repeat;
     width: 100%;
     height: 550px;

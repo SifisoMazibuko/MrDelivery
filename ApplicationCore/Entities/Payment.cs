@@ -11,6 +11,6 @@ namespace ApplicationCore.Entities
         public string month { get; set; }
         public string year { get; set; }
         public string securityCode { get; set; }
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
     }
 }

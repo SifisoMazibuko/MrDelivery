@@ -4,31 +4,24 @@ using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class Address
+    public class Address : BaseEntity
     {
-        public int Id { get; set; }
+        public string StreetNo { get;  set; }
 
-        public String Street { get; private set; }
+        public string BuildingType { get;  set; }
 
-        public String City { get; private set; }
+        public string UnitNo { get;  set; }
 
-        public String State { get; private set; }
+        public string ComplexName { get;  set; }
+        
+        //private Address() { }
 
-        public String Country { get; private set; }
-
-        public String ZipCode { get; private set; }
-
-        public String type { get; set; }
-
-        private Address() { }
-
-        public Address(string street, string city, string state, string country, string zipcode)
-        {
-            Street = street;
-            City = city;
-            State = state;
-            Country = country;
-            ZipCode = zipcode;
-        }
+        //public Address(string streetno, string buildingtype, string unitno, string complexname )
+        //{
+        //    StreetNo = streetno;
+        //    BuildingType = buildingtype;
+        //    UnitNo = unitno;
+        //    ComplexName = complexname;
+        //}
     }
 }

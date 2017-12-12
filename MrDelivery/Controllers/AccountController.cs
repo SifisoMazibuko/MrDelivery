@@ -17,6 +17,7 @@ using System.Net.Mail;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
+using MrDelivery.ViewModels;
 
 namespace MrDelivery.Controllers
 {
@@ -28,6 +29,9 @@ namespace MrDelivery.Controllers
         //private readonly SignInManager<ApplicationUser> _signInManager;
         private MrDeliveryContext context { get; set; }
         public ApplicationCore.Interfaces.Provider.IUserCustomer CustomerProvider { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
+
         private bool _disposeContext = false;
 
         public AccountController(DbContextOptions<MrDeliveryContext> option)
@@ -51,19 +55,24 @@ namespace MrDelivery.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
                 if (ModelState.IsValid)
                 {
                     if (isValid(model.Email, model.Password))
                     {
-                        var customer = (from c in context.Customers
-                                        where c.email == model.Email && c.password == model.Password
-                                        select c).ToList();
-
-                        foreach (var cus in customer)
+                        //var customer = (from c in context.Customers
+                        //                where c.email == model.Email && c.password == model.Password
+                        //                select c).ToList();
+                      var customer = context.Customers.Where(c => c.email == model.Email && c.password == model.Password).ToList();
+                        
+                       foreach (var cus in customer)
                         {
-                            ViewData["cusId"] = cus.Id;
-                            ViewData["firstname"] = cus.firstName;
-                            ViewData["LastName"] = cus.lastName;
+                            ViewData["firstName"] = cus.firstName;
+                            TempData["customerId"] = cus.Id;
+                            TempData["Firstname"] = cus.firstName;
                         }
                     }
                     ViewData["ReturnUrl"] = returnUrl;
@@ -78,7 +87,12 @@ namespace MrDelivery.Controllers
             {
                 throw new Exception("Error: Please try again" + err.Message.ToString());
             }
-            
+
+            //var results = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            //if (results.Succeeded)
+            //{
+            //    return RedirectToAction(returnUrl);
+            //}
             //ModelState.AddModelError(string.Empty, "Invalid login attempt");
             return View(model);
         }
@@ -199,7 +213,96 @@ namespace MrDelivery.Controllers
             ModelState.Clear();
             return View();
         }
+        [HttpGet]
+        public IActionResult MyAccount(int? userId)
+        {
+            userId = Convert.ToInt32(TempData["customerId"]);
+            var cus = new RegisterViewModel();
+            var customermodel = context.Customers.Where(c => c.Id == userId).ToList();
+            foreach (var item in customermodel)
+            {
+                cus.Id = item.Id;
+                cus.firstName = item.firstName;
+                cus.lastName = item.lastName;
+                cus.phoneNumber = item.phoneNumber;
+                cus.password = item.password;
+                cus.confirmPassword = item.confirmPassword;
+                cus.email = item.email;
+            }
+            return View(cus);
+        }
+        [HttpPost]
+        public IActionResult MyAccount(IndexViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new Customer();
+                {
+                    user.email = model.Email;
+                    user.email = model.Username;
+                    user.phoneNumber = model.PhoneNumber;
+                };
+                context.Customers.Add(user);
+                context.SaveChanges();;
+                return View(model);
+            }
+            return View();
+        }
+       
 
+        [HttpGet]
+        public IActionResult ChangePassword(int? userId)
+        {
+            userId = Convert.ToInt32(TempData["customerId"]);
+            var cus = new RegisterViewModel();
+            var customermodel = context.Customers.Where(c => c.Id == userId).ToList();
+            foreach (var item in customermodel)
+            {
+                cus.Id = item.Id;
+                cus.firstName = item.firstName;
+                cus.lastName = item.lastName;
+                cus.phoneNumber = item.phoneNumber;
+                cus.password = item.password;
+                cus.confirmPassword = item.confirmPassword;
+                cus.email = item.email;
+            }
+            return View(cus);
+        }
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (ModelState.IsValid)
+            {
+                var user = new Customer();
+                {
+                    user.password = model.password;
+                    user.confirmPassword = model.confirmPassword;
+                };
+                context.Customers.Add(user);
+                context.SaveChanges();
+                StatusMessage = "Your password has been changed.";
+                return View(model);
+               
+            }
+            return View();
+           
+        }
+
+        public IActionResult SendVerificationEmail()
+        {
+            StatusMessage = "Verification email sent. Please check your email.";
+            return RedirectToAction(nameof(Index));
+        }
+        public ActionResult Logout()
+        {
+            TempData["Firstname"] = null;
+
+            return RedirectToAction("Index","Home");
+        }
         protected override void Dispose(bool disposing)
         {
             if (_disposeContext)

@@ -38,5 +38,7 @@ namespace MrDelivery.ViewModels.Account
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone number")]
         public String phoneNumber { get; set; }
+
+        public bool IsEmailConfirmed { get; set; }
     }
 }

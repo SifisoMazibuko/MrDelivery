@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Data
 {
@@ -39,6 +41,10 @@ namespace Infrastructure.Data
             context.SaveChanges();
         }
 
+        public static async Task SeedAsync(UserManager<ApplicationUser> userManager) {
+            var defaultuser = new ApplicationUser { UserName = "sifisomazibuko@hotmail.com", Email = "sifisomazibuko@hotmail.com" };
+            await userManager.CreateAsync(defaultuser, "1234567");
+        }
         //public static async Task SeedAsync(MrDeliveryContext context)
         //{
         //    if (context.Restaurants.Any()) {

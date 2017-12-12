@@ -7,6 +7,7 @@
         margin-bottom: 200px;
         margin-left: 25%;
     }
+
     .checkoutbox {
         background: #fff;
         border: 0;
@@ -14,6 +15,7 @@
         border-radius: 6px;
         box-shadow: 0 2px 5px rgba(0,0,0,.2);
     }
+
     .submit-button {
         background: #FEE155;
         border: 0;
@@ -33,28 +35,29 @@
         transition: background 0.2s linear, color 0.2s linear;
         width: 100%;
     }
+
     .row label.special {
         transition: all .2s linear;
-        left:0;
-        padding:5px 0;
-        width:100%;
-        font-weight:400;
-        pointer-events:none;
-        cursor:pointer;
+        left: 0;
+        padding: 5px 0;
+        width: 100%;
+        font-weight: 400;
+        pointer-events: none;
+        cursor: pointer;
     }
-    .row label{
+
+    .row label {
         display: block;
         margin-bottom: 5px;
     }
+
     .row h5 {
-        font-weight:bold;   
+        font-weight: bold;
     }
+
     #moveup {
-        top:45px;
-        margin-left: 85%; 
-    }
-    input[type=text] {
-        text-align:left;
+        top: 45px;
+        margin-left: 85%;
     }
 </style>
 @{
@@ -64,48 +67,15 @@
 }
 <div class="row">
     <div class="container col-sm-6 col-md-6 col-lg-6">
-       
-        <br/>
-        
-        <form asp-action="SaveAddress" asp-controller="Checkout"  method="post">
-            <div class="checkoutbox" id="newpost">
-                <h5>Delivery Address</h5>
-                <div class="row">
-                    <label class="active special">Confirm street number...</label>
-                    <input asp-for="StreetNo" type="text" class="form-control"/>
-                    <label class="active special">Building type</label>
-                    @*<input  asp-for="BuildingType" type="text" class="form-control"/>*@
-                    <select asp-for="BuildingType" name="BuildingType" style="width:100%; height:5%;">
-                        <option value="">--Select--</option>
-                        <option value="Apartment">Apartment</option>
-                        <option value="House">House</option>
-                        <option value="Office">Office</option>
-                        <option value="Hotel">Hotel</option>
-                        <option value="B&B">B&B</option>
-                    </select>
-                    <label class="active special">Unit no</label>
-                    <input  asp-for="UnitNo" type="text" class="form-control" />
-                    <label class="active special">Complex name...</label>
-                    <input  asp-for="ComplexName" type="text" class="form-control" />
-                </div>
-            </div>
-            <p style="font-size:18px; color:#059622">@TempData["Address"]</p>
-            @*<h5>Contact Details</h5>
-        <div class="checkoutbox">
-            <div class="row">
-                <label class="active special">First Name</label>
-                <input type="hidden" name="name" value="" />XXXXXXXXXXX
-                <label class="active special">Phone Number</label>
-                <input type="hidden" name="name" value="" />XXXXXXXXXXX
-                <label class="active special">Alternate Number</label>
-                <input type="hidden" name="name" value="" />XXXXXXXXXXX
-            </div>
-        </div>*@
+
+        <br />
+
+        <form asp-action="SaveAddress" asp-controller="Checkout" method="post">         
             <br />
 
             @foreach (var item in ViewBag.checkout)
             {
-                <button class="submit-button" type="submit" asp-action="SaveAddress" asp-controller="Checkout" asp-route-id="@item.Id" onclick="showhide();"><span>Save</span></button>
+                @*<button class="submit-button" type="submit" asp-action="SaveAddress" asp-controller="Checkout" asp-route-id="@item.Id" onclick="showhide();"><span>Save</span></button>*@
 
                 sum = sum + (@item.UnitPrice + service);
 
@@ -121,19 +91,19 @@
                     </div>
                 </div>
                 <br />
-               
+
                 <a class="submit-button" asp-action="Pay" asp-controller="Checkout" asp-route-id="@item.Id" onclick="JavascriptFunction();">
                     <span>Continue to Card Payment</span>
                 </a>
             }
-              </form>
-       
+        </form>
+
 
         @*<a href="@Url.Action("Pay","Checkout", new { id = Model.Id})" class="submit-button">
-            <span>Continue to Card Payment</span>
-        </a>*@
+                <span>Continue to Card Payment</span>
+            </a>*@
     </div>
-   
+
 </div>
 <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
     top: 0px; width: 100%; height: 100%; background-color: #eeeeee; z-index: 30001;
@@ -198,7 +168,7 @@
     });
 
 
-    
+
 
 </script>
 

@@ -21,16 +21,27 @@ namespace MrDelivery.Controllers
             _disposeContext = true;
         }
         [HttpGet]
-        public IActionResult Index(int id)
+        public IActionResult Index(int userId)
         {
-            var orders = context.Carts.Where(od => od.Id == id);
-            var viewModel = orders.Select(o => new OrderViewModel()
-            {
-                Id = o.Id,
-                OrderName = o.ItemName,
-                Status = "Pending...",
-                dateTimeOffset = DateTimeOffset.Now
-            }).ToList();
+            userId = Convert.ToInt32(TempData["customerId"]);
+
+            if (userId > 0) {
+                var orders = context.Order.Where(od => od.Id == userId);
+                var viewModel = orders.Select(o => new OrderViewModel()
+                {
+                    Id = o.Id,
+                    OrderName = o.OrderName,
+                    Status = "Pending...",
+                    dateTimeOffset = DateTimeOffset.Now
+                }).ToList();
+
+
+                return View(viewModel);
+            }
+            else {
+                return RedirectToAction("Login", "Account");
+            }
+           
             //var order = new Order();
 
             //var viewModel = (from o in context.Carts
@@ -49,7 +60,7 @@ namespace MrDelivery.Controllers
             //    ViewBag.status = item.Status;
             //}
 
-            return View(viewModel);
+           
         }
        
 
