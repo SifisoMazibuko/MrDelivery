@@ -22,7 +22,7 @@ namespace MrDelivery.Controllers
         }
         public IActionResult Index(string search)
       {
-            if (!String.IsNullOrEmpty(search))
+            if (!String.IsNullOrEmpty(search) )
             {
                 var restaurant = context.Restaurants.Where(s => s.Location.StartsWith(search)
                                || s.Location.Contains(search)

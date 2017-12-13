@@ -10,14 +10,14 @@
     }
 </style>
 <div class="container">
+    <br/>
     <h1>@ViewData["Title"]</h1>
     <article class="row">
         <section class="col-xs-2 textSize">Order Number</section>
         <section class="col-xs-2 textSize">OrderName</section>
         <section class="col-xs-4 textSize">Date</section>
         <section class="col-xs-2 textSize">Status</section>
-        @*<section>Delivery</section>*@
-        <section class="col-xs-2"></section>
+        <section class="col-xs-1 textSize">Delivery</section>
     </article>
     @if (Model != null)
     {
@@ -28,23 +28,9 @@
                 <section class="col-xs-2">@Html.DisplayFor(model => item.OrderName)</section>
                 <section class="col-xs-4">@Html.DisplayFor(model => item.dateTimeOffset)</section>
                 <section class="col-xs-2">@Html.DisplayFor(model => item.Status)</section>
-                @*<section class="col-xs-2">@Html.DisplayFor(model => item.Delivery)</section>*@
+                <section class="col-xs-2">@Html.DisplayFor(model => item.Delivery)</section>
             </article>
             
         }
-        @*<article class="row">
-            <section class="col-xs-2">@Model.Id</section>
-            <section class="col-xs-2">@Model.OrderName</section>
-            <section class="col-xs-4">@Model.dateTimeOffset</section>
-            <section class="col-xs-2">@Model.Status</section>
-            <section class="col-xs-2">@Model.Delivery</section>
-        </article>*@
     }
-    @*<article class="row">
-        <section class="col-xs-2">@ViewBag.id</section>
-        <section class="col-xs-2">@ViewBag.orderName</section>
-        <section class="col-xs-4">@ViewBag.date</section>
-        <section class="col-xs-2">@ViewBag.status</section>
-        <section class="col-xs-2">@ViewBag.Delivery</section>
-    </article>*@
 </div>

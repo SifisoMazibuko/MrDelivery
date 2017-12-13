@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using MrDelivery.ViewModels;
 using ApplicationCore.Entities;
+using MimeKit;
+using MrDelivery.ViewModels.Account;
 
 namespace MrDelivery.Controllers
 {
@@ -79,9 +81,53 @@ namespace MrDelivery.Controllers
                     payment.securityCode = model.securityCode;
                     payment.Amount = model.Amount;
                 };
+
+                string name = "";
+                var cus = new RegisterViewModel();
+                int userId = Convert.ToInt32(TempData["customerId"]);
+                var customer = context.Customers.Where(c => c.Id == userId);
+                foreach (var item in customer)
+                {
+                    cus.email = item.email;
+                    name = cus.firstName;
+                }
+
+                //var orders = context.Order.Where(od => od.Id == userId);
+                //var viewModel = orders.Select(o => new OrderViewModel()
+                //{
+                //    Id = o.Id,
+                //    OrderName = o.OrderName,
+                //    Status = "Pending...",
+                //    dateTimeOffset = DateTimeOffset.Now,
+                //    Delivery = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
+                //}).ToList();
+
+
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Sifiso Mazibuko", "mazibujo19@gmail.com"));
+                message.To.Add(new MailboxAddress(cus.email));
+                message.Subject = "ORDER RECEIVED";
+                message.Body = new TextPart
+                {
+                    Text = string.Format("Hi " + payment.Name + ", Your order was received and is been processed "+ "\n")
+
+                };
+
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    client.Authenticate("mazibujo19@gmail.com", "Secretive2017");
+
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+
                 context.Payments.Add(payment);
                 context.SaveChanges();
 
+               
                 return RedirectToAction("SuccessPayment", "Checkout");
             }
 

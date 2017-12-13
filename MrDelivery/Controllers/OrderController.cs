@@ -32,7 +32,8 @@ namespace MrDelivery.Controllers
                     Id = o.Id,
                     OrderName = o.OrderName,
                     Status = "Pending...",
-                    dateTimeOffset = DateTimeOffset.Now
+                    dateTimeOffset = DateTimeOffset.Now,
+                    Delivery = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
                 }).ToList();
 
 
