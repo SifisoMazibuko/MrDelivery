@@ -83,126 +83,139 @@
     }
 </style>
 
-@{
-    decimal sum = 0;
-    decimal sumquantity = 0;
-    decimal service = 20;
-    decimal Quantity = 1;
-    string r = "R";
-}
- <form method="post" asp-action="AddToCart" asp-controller="Products">
-     <div class="container">
-         <h2 style="color:#000000">@ViewBag.message</h2>
-         <p style="color:#000000"> @ViewBag.message2</p>
-         <br/>
-         @foreach (var itams in ViewBag.itemsAdded)
-         {
-             sum = sum + (@itams.UnitPrice + service);
-             sumquantity = sum + (itams.UnitPrice * Quantity);
-             @foreach (var item in ViewBag.itemRes)
-             {
-                 <h2 style="text-align:center">@item.Name</h2>
-             }
-             <div class="cart-totals">
-                 @*<button asp-action="RemoveFromCart" asp-controller="Products" asp-route-id="@itams.Id" class="btn btn-default"><span class="close">&times;</span></button>*@
-                 <a asp-action="RemoveFromCart" asp-controller="Products" asp-route-id="@itams.Id" class="close"><span>&times;</span></a>       
-                  @*<span class="close">&times;</span>*@
-                 <section style="font-weight:900">@itams.ItemName</section>
-                 <section>@itams.Description</section>
-                
-             </div><br />
-             <div class="cart-totals">
-                 <div class="row">
-                     <span style="font-weight:700">Subtotal</span>
-                     @*<p>@r @itams.UnitPrice.ToString("N2")</p><br />*@
-                         <p id="price"><span style="color:#fff;">MRP-></span> @r @itams.UnitPrice.ToString("N2")  </p>
-                         <p >Service Fee</p>
-                         <p>@r 20.00</p><br />
-                         @*<span>Total</span>
-                         @*<p id="Totprice">@r @String.Format("{0:0.00}", sum * Quantity)</p>*@
-                         <p id="amount"> Total Price: @r @String.Format("{0:0.00}", sum * Quantity) </p>                 
-                 </div>
-                
-             </div>
-            
-            <h2>Quantity</h2>
-            <div style="display:inline-block">
-                @*<input name="quantity" type="hidden" value="-1" onchange='getamount(this.value);'/>
-                <button type="button" class="quantity-left-minus btn btn-default" id="quantityMinusId" data-type="minus" onchange='getamount(this.value);'><span class="glyphicon glyphicon-minus"></span></button>*@
-                <input type="text" name='item quantity' id='item' class="form-control input-number" value="1" min="1" max="100" onchange='getamount(this.value);' >
-                <input type="hidden" asp-for="@Model.Quantity" name="quantity" onchange='getamount(this.value);'/>
-                @*<input name="quantity" type="hidden" value="1" onchange='getamount(this.value);'/>
-                <button type="button" class="quantity-right-plus btn btn-default" id="quantityAddId" data-type="plus" onchange='getamount(this.value);'><span class="glyphicon glyphicon-plus"></span></button>*@
+    @{
+        decimal sum = 0;
+        decimal sumquantity = 0;
+        decimal service = 20;
+        decimal Quantity = 1;
+        string r = "R";
+    }
+<body onload="initDB(); setupEventListeners(); chooseDialog();">
+    <form method="post" asp-action="AddToCart" asp-controller="Products">
+        <div class="container">
+            <h2 style="color:#000000">@ViewBag.message</h2>
+            <p style="color:#000000"> @ViewBag.message2</p>
+            <br />
+            @foreach (var itams in ViewBag.itemsAdded)
+            {
+                sum = sum + (@itams.UnitPrice + service);
+                sumquantity = sum + (itams.UnitPrice * Quantity);
+                @foreach (var item in ViewBag.itemRes)
+                {
+                    <h2 style="text-align:center">@item.Name</h2>
+                }
+                <div class="cart-totals">
+                    @*<button asp-action="RemoveFromCart" asp-controller="Products" asp-route-id="@itams.Id" class="btn btn-default"><span class="close">&times;</span></button>*@
+                    <a asp-action="RemoveFromCart" asp-controller="Products" asp-route-id="@itams.Id" class="close"><span>&times;</span></a>
+                    @*<span class="close">&times;</span>*@
+                    <section style="font-weight:900">@itams.ItemName</section>
+                    <section>@itams.Description</section>
 
-            </div>
-            
-         }
-         <br/><br/>
-         <a href="@Url.Action("Checkout","Checkout", new { id=Model.Id})" class="submit-button add-to-cart-button" id="amount">Checkout</a>
-     </div>
-    
- </form>  
-<environment include="Development">
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        // Get the modal
-        var modal = document.getElementById('myModal');
+                </div><br />
+                <div class="cart-totals">
+                    <div class="row">
+                        <span style="font-weight:700">Subtotal</span>
+                        @*<p>@r @itams.UnitPrice.ToString("N2")</p><br />*@
+                        <p id="price"><span style="color:#fff;">MRP-></span> @r @itams.UnitPrice.ToString("N2")  </p>
+                        <p>Service Fee</p>
+                        <p>@r 20.00</p><br />
+                        @*<span>Total</span>
+                            @*<p id="Totprice">@r @String.Format("{0:0.00}", sum * Quantity)</p>*@
+                        <p id="amount"> Total Price: @r @String.Format("{0:0.00}", sum * Quantity) </p>
+                    </div>
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+                </div>
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+                <h2>Quantity</h2>
+                <div style="display:inline-block">
+                    @*<input name="quantity" type="hidden" value="-1" onchange='getamount(this.value);'/>
+                        <button type="button" class="quantity-left-minus btn btn-default" id="quantityMinusId" data-type="minus" onchange='getamount(this.value);'><span class="glyphicon glyphicon-minus"></span></button>*@
+                    <input type="text" name='item quantity' id='item' class="form-control input-number" value="1" min="1" max="100" onchange='getamount(this.value);'>
+                    <input type="hidden" asp-for="@Model.Quantity" name="quantity" onchange='getamount(this.value);' />
+                    @*<input name="quantity" type="hidden" value="1" onchange='getamount(this.value);'/>
+                        <button type="button" class="quantity-right-plus btn btn-default" id="quantityAddId" data-type="plus" onchange='getamount(this.value);'><span class="glyphicon glyphicon-plus"></span></button>*@
 
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
+                </div>
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
+            }
+            <br /><br />
+            <a href="@Url.Action("Checkout","Checkout", new { id=Model.Id})" class="submit-button add-to-cart-button" id="amount">Checkout</a>
+        </div>
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
+    </form>
+
+    <div id="controldiv"></div>
+    <iframe id="contentdiv" style="display: none" class="editable"></iframe>
+
+    <div id="origcontentdiv" style="display: none"></div>
+    <div id="tempdata"></div>
+
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
                 modal.style.display = "none";
             }
-        }
-    </script>
-    <script  type="text/javascript">
-        function update() {
-            var quantitycount = 0;
-            var price = document.getElementById("Unitprice").value;
-            var quantity = document.getElementById("quantity").value;
 
-            var addQuantityButton = document.getElementById('quantityAddId');
-            var minusQuantityButton = document.getElementById('quantityMinusId');
-
-            var Totalprice = price * quantity;
-
-            addQuantityButton.addEventListener('click', function () {
-                alert('Message from add quantity button');
-                $('#quantity').val(quantity + 1);
-            }, false);
-
-            minusQuantityButton.addEventListener('click', function () {
-                alert('Message from minus quantity button');
-                if (quantity > 0) {
-                    $('#quantity').val(quantity - 1);
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
                 }
-            }, false);
+            }
+        </script>
+        <script type="text/javascript">
+            function update() {
+                var quantitycount = 0;
+                var price = document.getElementById("Unitprice").value;
+                var quantity = document.getElementById("quantity").value;
 
-            document.getElementById("TotalPrice").value = Totalprice
+                var addQuantityButton = document.getElementById('quantityAddId');
+                var minusQuantityButton = document.getElementById('quantityMinusId');
 
-        }        
-    </script>
-</environment>
+                var Totalprice = price * quantity;
 
-<script>
+                addQuantityButton.addEventListener('click', function () {
+                    alert('Message from add quantity button');
+                    $('#quantity').val(quantity + 1);
+                }, false);
+
+                minusQuantityButton.addEventListener('click', function () {
+                    alert('Message from minus quantity button');
+                    if (quantity > 0) {
+                        $('#quantity').val(quantity - 1);
+                    }
+                }, false);
+
+                document.getElementById("TotalPrice").value = Totalprice
+
+            }
+        </script>
+    </environment>
+</body>
+
+    
+
+    <script>
      function getamount(value) {
             var url = '@Url.Action("Checkout", "Checkout", new { id = Model.Id })';
             var service = 20.00;
@@ -249,6 +262,275 @@
 
         });
 
+    </script>
+    <script type="text/javascript">
+     //var connection = new ActiveXObject("ADODB.Connection");
+     //var connectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated Security=true;Initial Catalog=MrDelivery;";
+     //connection.Open(connectionString);
+     //var rs = new ActiveXObject("ADODB.Recordset");
+     //rs.Open("SELECT * FROM Carts", connection);
+     //rs.MoveFirst
+     //while (!rs.eof) {
+     //    document.write(rs.fields(1));
+     //    rs.movenext;
+     //}
+
+     //rs.close;
+     //connection.close;
+    </script>
+
+    <script type="text/javascript">
+    //    var systemDB;
+
+    //    /*! Initialize the systemDB global variable. */
+    //    function initDB() {
 
 
-</script>
+    //        try {
+    //            if (!window.openDatabase) {
+    //                alert('not supported');
+    //            } else {
+    //                var shortName = 'mydatabase';
+    //                var version = '1.0';
+    //                var displayName = 'My Important Database';
+    //                var maxSize = 65536; // in bytes
+    //                var myDB = openDatabase(shortName, version, displayName, maxSize);
+
+    //                // You should have a database instance in myDB.
+
+    //            }
+    //        } catch (e) {
+    //            // Error handling code goes here.
+    //            if (e == INVALID_STATE_ERR) {
+    //                // Version number mismatch.
+    //                alert("Invalid database version.");
+    //            } else {
+    //                alert("Unknown error " + e + ".");
+    //            }
+    //            return;
+    //        }
+
+    //        // alert("Database is: "+myDB);
+
+    //        createTables(myDB);
+    //        systemDB = myDB;
+
+    //    }
+
+    //    /*! Format a link to a document for display in the "Choose a file" pane. */
+    //    function docLink(row) {
+    //        var name = row['name'];
+    //        var files_id = row['id'];
+
+    //        return "<tr class='filerow'><td class='filenamecell'>" + name + "</td><td class='filelinkcell'>(<a href='#' onClick=loadFile(" + files_id + ")>edit</a>)&nbsp;(<a href='#' onClick=deleteFile(" + files_id + ")>delete</a>)</td></tr>\n";
+    //    }
+
+    //    /*! If a deletion resulted in a change in the list of files, redraw the "Choose a file" pane. */
+    //    function deleteUpdateResults(transaction, results) {
+    //        if (results.rowsAffected) {
+    //            chooseDialog();
+    //        }
+    //    }
+
+    //    /*! Mark a file as "deleted". */
+    //    function reallyDelete(id) {
+    //        // alert('delete ID: '+id);
+    //        var myDB = systemDB;
+
+    //        myDB.transaction(
+    //            new Function("transaction", "transaction.executeSql('UPDATE files set deleted=1 where id=?;', [ " + id + " ], /* array of values for the ? placeholders */" +
+    //                "deleteUpdateResults, errorHandler);")
+    //        );
+
+    //    }
+
+    //    /*! Ask for user confirmation before deleting a file. */
+    //    function deleteFile(id) {
+    //        var myDB = systemDB;
+
+    //        myDB.transaction(
+    //            new Function("transaction", "transaction.executeSql('SELECT id,name from files where id=?;', [ " + id + " ], /* array of values for the ? placeholders */" +
+    //                "function (transaction, results) {" +
+    //                "if (confirm('Really delete '+results.rows.item(0)['name']+'?')) {" +
+    //                "reallyDelete(results.rows.item(0)['id']);" +
+    //                "}" +
+    //                "}, errorHandler);")
+    //        );
+    //    }
+
+    //    /*! This prints a list of "files" to edit. */
+    //    function chooseDialog() {
+    //        var myDB = systemDB;
+
+    //        myDB.transaction(
+    //            function (transaction) {
+    //                transaction.executeSql("SELECT * from files where deleted=0;",
+    //                    [], // array of values for the ? placeholders
+    //                    function (transaction, results) {
+    //                        var string = '';
+    //                        var controldiv = document.getElementById('controldiv');
+    //                        for (var i = 0; i < results.rows.length; i++) {
+    //                            var row = results.rows.item(i);
+    //                            string = string + docLink(row);
+    //                        }
+    //                        if (string == "") {
+    //                            string = "No files.<br />\n";
+    //                        } else {
+    //                            string = "<table class='filetable'>" + string + "</table>";
+    //                        }
+    //                        controldiv.innerHTML = "<H1>Choose a file to edit</H1>" + string + linkToCreateNewFile();
+    //                    }, errorHandler);
+    //            }
+    //        );
+
+    //    }
+
+    //    /*! This prints a link to the "Create file" pane. */
+    //    function linkToCreateNewFile() {
+    //        return "<p><button onClick='createNewFile()'>Create New File</button>";
+    //    }
+
+    //    /*! This creates a new "file" in the database. */
+    //    function createNewFileAction() {
+    //        var myDB = systemDB;
+    //        var name = document.getElementById('createFilename').value
+
+    //        // alert('Name is "'+name+'"');
+
+    //        myDB.transaction(
+    //            function (transaction) {
+    //                var myfunc = new Function("transaction", "results", "/* alert('insert ID is'+results.insertId); */ transaction.executeSql('INSERT INTO files (name, filedata_id) VALUES (?, ?);', [ '" + name + "', results.insertId], nullDataHandler, killTransaction);");
+
+    //                transaction.executeSql('INSERT INTO filedata (datablob) VALUES ("");', [],
+    //                    myfunc, errorHandler);
+    //            }
+    //        );
+
+    //        chooseDialog();
+    //    }
+
+    //    /*! This saves the contents of the file. */
+    //    function saveFile() {
+    //        var myDB = systemDB;
+    //        // alert("Save not implemented.\n");
+
+    //        var contentdiv = document.getElementById('contentdiv');
+    //        var contents = contentdiv.contentDocument.body.innerHTML;
+
+    //        // alert('file text is '+contents);
+
+    //        myDB.transaction(
+    //            function (transaction) {
+    //                var contentdiv = document.getElementById('contentdiv');
+    //                var datadiv = document.getElementById('tempdata');
+
+    //                var filedata_id = datadiv.getAttribute('lfdataid');
+    //                var contents = contentdiv.contentDocument.body.innerHTML;
+
+    //                transaction.executeSql("UPDATE filedata set datablob=? where id=?;",
+    //                    [contents, filedata_id], // array of values for the ? placeholders
+    //                    nullDataHandler, errorHandler);
+    //                // alert('Saved contents to '+filedata_id+': '+contents);
+    //                var origcontentdiv = document.getElementById('origcontentdiv');
+    //                origcontentdiv.innerHTML = contents;
+
+    //                alert('Saved.');
+    //            }
+    //        );
+    //    }
+    //    /*! This displays the "Create file" pane. */
+    //    function createNewFile() {
+    //        var myDB = systemDB;
+    //        var controldiv = document.getElementById('controldiv');
+    //        var string = "";
+
+    //        string += "<H1>Create New File</H1>\n";
+    //        string += "<form action='javascript:createNewFileAction()'>\n";
+    //        string += "<input id='createFilename' name='name'>Filename</input>\n";
+    //        string += "<input type='submit' value='submit' />\n";
+    //        string += "</form>\n";
+
+    //        controldiv.innerHTML = string;
+
+    //    }
+    //    /*! This processes the data read from the database by loadFile and sets up the editing environment. */
+    //    function loadFileData(transaction, results) {
+    //        var controldiv = document.getElementById('controldiv');
+    //        var contentdiv = document.getElementById('contentdiv');
+    //        var origcontentdiv = document.getElementById('origcontentdiv');
+    //        var datadiv = document.getElementById('tempdata');
+
+    //        // alert('loadFileData called.');
+
+    //        var data = results.rows.item(0);
+    //        var filename = data['name'];
+    //        var filedata = data['datablob'];
+    //        datadiv.setAttribute('lfdataid', parseInt(data['filedata_id']));
+
+    //        document.title = "Editing " + filename;
+    //        controldiv.innerHTML = "";
+    //        contentdiv.contentDocument.body.innerHTML = filedata;
+    //        origcontentdiv.innerHTML = filedata;
+    //        contentdiv.style.border = "1px solid #000000";
+    //        contentdiv.style['min-height'] = '20px';
+    //        contentdiv.style.display = 'block';
+    //        contentdiv.contentDocument.contentEditable = true;
+    //    }
+
+    //    /*! This loads a "file" from the database and calls loadFileData with the results. */
+    //    function loadFile(id) {
+    //        // alert('Loading file with id '+id);
+    //        var datadiv = document.getElementById('tempdata');
+    //        datadiv.setAttribute('lfid', parseInt(id));
+
+    //        myDB = systemDB;
+    //        myDB.transaction(
+    //            function (transaction) {
+    //                var datadiv = document.getElementById('tempdata');
+    //                var id = datadiv.getAttribute('lfid');
+    //                // alert('loading id' +id);
+    //                transaction.executeSql('SELECT * from files, filedata where files.id=? and files.filedata_id = filedata.id;', [id], loadFileData, errorHandler);
+    //            }
+    //        );
+
+    //    }
+    //    /*! This creates the database tables. */
+    //    function createTables(db) {
+
+    //        /* To wipe out the table (if you are still experimenting with schemas,
+    //           for example), enable this block. */
+    //        if (0) {
+    //            db.transaction(
+    //                function (transaction) {
+    //                    transaction.executeSql('DROP TABLE files;');
+    //                    transaction.executeSql('DROP TABLE filedata;');
+    //                }
+    //            );
+    //        }
+    //    /*! This is used as a data handler for a request that should return no data. */
+    //    function nullDataHandler(transaction, results) {
+    //    }
+    //    /*! This returns a string if you have not yet saved changes.  This is used by the onbeforeunload
+    //handler to warn you if you are about to leave the page with unsaved changes. */
+    //    function saveChangesDialog(event) {
+    //        var contentdiv = document.getElementById('contentdiv');
+    //        var contents = contentdiv.contentDocument.body.innerHTML;
+    //        var origcontentdiv = document.getElementById('origcontentdiv');
+    //        var origcontents = origcontentdiv.innerHTML;
+
+    //        // alert('close dialog');
+
+    //        if (contents == origcontents) {
+    //            return NULL;
+    //        }
+
+    //        return "You have unsaved changes."; //   CMP "+contents+" TO "+origcontents;
+    //    }
+    //    /*! This sets up an onbeforeunload handler to avoid accidentally navigating away from the
+    //      page without saving changes. */
+    //    function setupEventListeners() {
+    //        window.onbeforeunload = function () {
+    //            return saveChangesDialog();
+    //        };
+    //    }
+    </script>

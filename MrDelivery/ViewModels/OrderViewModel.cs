@@ -13,6 +13,8 @@ namespace MrDelivery.ViewModels
         public string OrderName { get; set; }
         public DateTimeOffset dateTimeOffset { get; set; }
         public string Status { get; set; }
-        public string Delivery { get; set; }
+        public String Delivery { get; set; }
+        public string Description { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

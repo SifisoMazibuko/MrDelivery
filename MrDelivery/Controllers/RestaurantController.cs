@@ -103,7 +103,9 @@ namespace MrDelivery.Controllers
                         order.OrderName = model.ItemName;
                         order.Created = DateTimeOffset.Now;
                         order.Status = "pending";
-                        order.Delivery = DateTime.Now.AddDays(3);
+                        order.Description = model.Description;
+                        order.UnitPrice = model.UnitPrice;
+                        order.Delivery = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy");
                     };
 
                     context.Order.Add(order);

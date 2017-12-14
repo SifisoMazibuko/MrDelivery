@@ -81,36 +81,46 @@ namespace MrDelivery.Controllers
                     payment.securityCode = model.securityCode;
                     payment.Amount = model.Amount;
                 };
-
-                string name = "";
+                
                 var cus = new RegisterViewModel();
                 int userId = Convert.ToInt32(TempData["customerId"]);
                 var customer = context.Customers.Where(c => c.Id == userId);
                 foreach (var item in customer)
                 {
                     cus.email = item.email;
-                    name = cus.firstName;
                 }
 
-                //var orders = context.Order.Where(od => od.Id == userId);
-                //var viewModel = orders.Select(o => new OrderViewModel()
-                //{
-                //    Id = o.Id,
-                //    OrderName = o.OrderName,
-                //    Status = "Pending...",
-                //    dateTimeOffset = DateTimeOffset.Now,
-                //    Delivery = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
-                //}).ToList();
-
-
+                var order = context.Order.Find(userId);
+                var mod = new OrderViewModel();
+                var myItems = context.Order.Where(i => i.Id == userId);
+                foreach (var item in myItems)
+                {
+                    mod.Description = item.Description;
+                    mod.UnitPrice =item.UnitPrice;
+                }
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Sifiso Mazibuko", "mazibujo19@gmail.com"));
                 message.To.Add(new MailboxAddress(cus.email));
-                message.Subject = "ORDER RECEIVED";
+                message.Subject = "ORDER RECEIVED: " +order.Id;
                 message.Body = new TextPart
                 {
-                    Text = string.Format("Hi " + payment.Name + ", Your order was received and is been processed "+ "\n")
+                    Text = string.Format("Hi " + payment.Name + "," +
+                                "\n\n Your order was received and is been processed. " +
+                                "\n\n"
+                                +"Order Number: "+ order.Id+ ""
+                                +"\nOrder Name: "+ order.OrderName + ""
+                                +"\nOrder Description: " + mod.Description + ""
+                                +"\nOrder Price: R " + mod.UnitPrice + ""
+                                +"\nOrder Date: "+ order.Created + ""
+                                +"\nOrder Delivery: "+ order.Delivery + ""
+                                +"\n\n\n"+ "Thank you!" 
+                                +"\n\n"+ "Kind Regards,"
+                                +"\n Team MrDFood\n"
+                                +"+2761 010 1256 \n"
+                                +"MrDfood@MrDfood.co.za"
+                        )                  
 
+                    
                 };
 
                 using (var client = new MailKit.Net.Smtp.SmtpClient())

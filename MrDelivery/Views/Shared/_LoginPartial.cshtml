@@ -17,10 +17,10 @@
 </style>
 @if (TempData["Firstname"] != null)
 {
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav navbar-collapse collapse">
         <li class="text"><a>FREE DELIVERY ON FIRST ORDER</a></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right navbar-collapse collapse">
         <li><a asp-area="" asp-controller="Order" asp-action="Index"> My Order </a></li>
         <li><a asp-area="" asp-controller="Account" asp-action="MyAccount"> My Account</a></li>
         <li><a>Hi @TempData["Firstname"] </a></li>
@@ -30,7 +30,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav navbar-collapse collapse">
         <li class="text"><a asp-area="" asp-controller="Home" asp-action="Index">FREE DELIVERY ON FIRST ORDER</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" id="box">
