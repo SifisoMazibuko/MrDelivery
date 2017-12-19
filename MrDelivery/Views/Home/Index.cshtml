@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<ApplicationCore.Entities.Restaurants>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -49,51 +50,56 @@
         margin-bottom: 320px;
     }
 </style>
-<div class="brands-section" id="brandbox-section">
-    <h3 class="title">What do you feel like? </h3>
-    <h2 class="subtitle">Get it delivered from over 1600 restaurants, including SA' favourites...</h2>
-    <div class="img-inline" >
-        <img src="~/images/brands/panarottis.PNG"/>
-        <img src="~/images/brands/wimpy.PNG"/>
-        <img src="~/images/brands/spur.PNG"/>
-        <img src="~/images/brands/simplyasia.PNG"/>
-        <img src="~/images/brands/roccomamas.PNG"/>
-        <img src="~/images/brands/ob.PNG"/>
-        <img src="~/images/brands/nandos.PNG"/>
-        <img src="~/images/brands/kfc.PNG" />
-        <img src="~/images/brands/colcacchio.PNG"/>
+
+
+@if (ViewBag.res != null)
+{
+    <div class="brands-section" id="brandbox-section">
+        <h3 class="title">What do you feel like? </h3>
+        <h2 class="subtitle">Get it delivered from over 1600 restaurants, including SA' favourites...</h2>
+        <div class="img-inline">
+            <img src="~/images/brands/panarottis.PNG" />
+            <img src="~/images/brands/wimpy.PNG" />
+            <img src="~/images/brands/spur.PNG" />
+            <img src="~/images/brands/simplyasia.PNG" />
+            <img src="~/images/brands/roccomamas.PNG" />
+            <img src="~/images/brands/ob.PNG" />
+            <img src="~/images/brands/nandos.PNG" />
+            <img src="~/images/brands/kfc.PNG" />
+            <img src="~/images/brands/colcacchio.PNG" />
+        </div>
     </div>
-    @*<div class="brans-restuarants">
-        <ul>
-            <li>
-                <label>
-                    <img src="~/images/brands/panarottis.PNG"  class="restaurant-logo" />
-                </label>
-            </li>
-            <li>
-                <img src="~/images/brands/wimpy.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/spur.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/simplyasia.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/roccomamas.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/ob.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/nandos.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/kfc.PNG" class="restaurant-logo"/>
-            </li>
-            <li>
-                <img src="~/images/brands/colcacchio.PNG" class="restaurant-logo"/>
-            </li>
-        </ul>
-    </div>*@
-</div>
+}
+else
+{
+
+    <ul id="myUL" style="color:#ffffff">
+        <li>
+
+            @foreach (var item in ViewBag.res)
+            {
+
+                <a href="@Url.Action("Menu", "Restaurant", new { search = item.Name })" name="search">
+
+                    <div class="index-wrap">
+                        <div class="image-wrap topDiv">
+                            <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
+                        </div>
+                        <div class="nav navbar-left innerDiv">
+                            <br />
+                            <div class="restaurant-logo pull-left">
+                                <span><img src="@item.Icon" lazy-img="@item.Icon" /></span>
+                            </div>
+                            <div class="pull-left">
+                                <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
+                                <p style="font-size:10px;float:left;">@item.ItemType</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+            }
+        </li>
+    </ul>
+
+}

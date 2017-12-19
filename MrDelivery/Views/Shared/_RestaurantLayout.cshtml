@@ -75,7 +75,13 @@
                     <div class="col-sm-10">
                         <div class="inner-addon left-addon">
                             <i class="glyphicon glyphicon-search"></i>
-                            <input style="height:40px;width:550%;border-radius: 10px;" class="form-control" type="text" placeholder="Search restaurant, cuisine and preference" onkeyup="myFunction()" id="myInput"><br />
+                            @*<input style="height:40px;width:550%;border-radius: 10px;" class="form-control" type="text" placeholder="Search restaurant, cuisine and preference" onkeyup="myFunction()" id="myInput"><br />*@
+                            @*<input style="height:40px;width:550%;border-radius: 10px;" class="form-control" type="text" placeholder="Search restaurant, cuisine and preference" onkeyup="myFunction()" id="myInput"><br />*@
+                            <form id="live-search" action=""  method="post"  >
+                                <fieldset>
+                                    <input type="text" class="form-control" id="filter" value=""  style="height:40px;width:550%;border-radius: 10px;"/>
+                                 </fieldset>
+                            </form>
                         </div>
                     </div>
                 </div>

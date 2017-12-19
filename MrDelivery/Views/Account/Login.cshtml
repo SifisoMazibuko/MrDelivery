@@ -18,12 +18,15 @@
         <link rel="stylesheet" href="~/css/site.min.css" as p-append-version="true" />
     </environment>
 </head>
+<a asp-action="Index" asp-controller="Home" class="close" id="close"><span style="font-size: 40px">&times;</span></a>
 <body class="loginBackground">
-    <div class="row" id="rowReg">
+   
+    <div class="row">
         <h2>Welcome Back!</h2>
         <h4>You're moments away from good, hot food!</h4>
-        <br />
-        <div class="col-md-4">
+        <br />        
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">

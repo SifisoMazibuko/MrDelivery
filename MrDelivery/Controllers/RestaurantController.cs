@@ -23,12 +23,24 @@ namespace MrDelivery.Controllers
         }
         
         [HttpGet]
-        public IActionResult Restaurants(RestaurantViewModel model)
-        {
-            var res = (from c in context.Restaurants
-                       select c).ToList();
-            ViewBag.res = res;
-            return View(res);
+        public IActionResult Restaurants(RestaurantViewModel model,string search)
+        {            
+            search = Convert.ToString(TempData["search"]);
+           
+            if (search != null)
+            {
+                var res = (from c in context.Restaurants
+                           where c.Location == search || c.SearchLocation == search
+                           select c).ToList();
+                ViewBag.res = res;
+            }
+            if (search == "") {
+                var res = context.Restaurants.ToList();
+                ViewBag.res = res;
+            }
+            
+            
+            return View();
         }
 
         [HttpGet]
@@ -61,17 +73,14 @@ namespace MrDelivery.Controllers
                 ViewBag.name = item.Name;
                 ViewBag.location = item.Location;
                 ViewBag.itemType = item.ItemType;
-            }
 
-            //resturantModel = resturantModel.Where(p => p..StartsWith(searchProperty)
-            //                                        || p.title.StartsWith(searchProperty)
-            //                                        || p.location.Contains(searchProperty)
-            //                                        || p.location.StartsWith(searchProperty)
-            //                                        || p.Desc.StartsWith(searchProperty)
-            //                                        || p.Desc.Contains(searchProperty)
-            //                                        || p.category.Contains(searchProperty)
-            //                                        || p.category.StartsWith(searchProperty)
-            //                                        ); 
+                ViewBag.itemName = item.ItemName;
+                ViewBag.menuType = item.MenuType;
+                ViewBag.unitPrice = item.UnitPrice;
+                ViewBag.description = item.Description;
+
+            }
+            ViewBag.all = resturantModel;
             return View(resturantModel);            
         }
         [HttpPost]
@@ -105,7 +114,7 @@ namespace MrDelivery.Controllers
                         order.Status = "pending";
                         order.Description = model.Description;
                         order.UnitPrice = model.UnitPrice;
-                        order.Delivery = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy");
+                        order.Delivery = DateTime.Today.AddMinutes(45).ToString("mm");
                     };
 
                     context.Order.Add(order);

@@ -1,7 +1,7 @@
 ﻿#registerButtonBox {
     border: 3px solid black;
     height: 60px;
-    width: 470px;
+    width: 450px;
     border-radius: 30px;
     font-weight: 900;
     color: #808080;
@@ -26,7 +26,9 @@ input {
 
 #textboxBorder {
     border-color: #6dcff6;
-    border-bottom: 2px solid black;
+    border: none;
+    border: initial #6dcff6;
+    border-bottom: 1.9px solid black;
 }
 
 .row h3, h5, #regCenter {
@@ -59,4 +61,15 @@ input[type="password"]:-ms-input-placeholder {
 
 input[type="password"]::-moz-placeholder {
     color: #ffffff;
+}
+
+h2 {
+    position: relative;
+    margin-left: 650px;
+    display: inline-block;
+}
+
+#close {
+    margin-top: -40px;
+    margin-right: 20px;
 }

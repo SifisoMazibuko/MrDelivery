@@ -1,9 +1,9 @@
-﻿@model IEnumerable<ApplicationCore.Entities.Restaurants>
-
+﻿
 @{
-    ViewData["Title"] = "Restaurants";
+    ViewData["Title"] = "GetRestaurants";
     Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
 }
+
 <style>
     .item-thumbnail {
         max-width: 370px;
@@ -71,11 +71,12 @@
             float: left;
             top: 17px;
             left: -210px;
-            align-content:flex-start;
+            align-content: flex-start;
         }
-        .nav .pull-left {
-            padding: 0px 0px 0px 90px;
-        }
+
+    .nav .pull-left {
+        padding: 0px 0px 0px 90px;
+    }
 </style>
 <style>
     div.connect-cat {
@@ -104,66 +105,34 @@
     #box {
         margin: 20px;
     }
-    
 </style>
 
-   
-<ul id="myUL" style="color:#ffffff" class="restaurantlist">
+<ul id="myUL" style="color:#ffffff">
     <li>
 
-    @foreach (var item in ViewBag.res)
-    {
+        @foreach (var item in ViewBag.res)
+        {
 
-        <a href="@Url.Action("Menu", "Restaurant", new { search = item.Name })"  name="search">
+            <a href="@Url.Action("Menu", "Restaurant", new { search = item.Name })" name="search">
 
-            <div class="index-wrap">
-                <div class="image-wrap topDiv">
-                    <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
-                </div>
-                <div class="nav navbar-left innerDiv">
-                    <br />
-                    <div class="restaurant-logo pull-left">
-                        <span><img src="@item.Icon" lazy-img="@item.Icon" /></span>
+                <div class="index-wrap">
+                    <div class="image-wrap topDiv">
+                        <img src="@item.ImagePath" alt="@item.Name" id="myImg2" style="border-radius:8px" />
                     </div>
-                    <div class="pull-left">
-                        <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
-                        <p style="font-size:10px;float:left;">@item.ItemType</p>
-                    </div>
+                    <div class="nav navbar-left innerDiv">
+                        <br />
+                        <div class="restaurant-logo pull-left">
+                            <span><img src="@item.Icon" lazy-img="@item.Icon" /></span>
+                        </div>
+                        <div class="pull-left">
+                            <p style="font-weight:900;float:left;">@item.Name @item.Location</p><br />
+                            <p style="font-size:10px;float:left;">@item.ItemType</p>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-        </a>
-    }
+            </a>
+        }
     </li>
 </ul>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $("#filter").keyup(function () {
-
-            // Retrieve the input field text and reset the count to zero
-            var filter = $(this).val(), count = 0;
-
-            // Loop through the restaurant list
-            $(".restaurantlist li").each(function () {
-
-                // If the list item does not contain the text phrase fade it out
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                    $(this).fadeOut();
-                    $(this).filter();
-                    $(this).find();
-                    // Show the list item if the phrase matches and increase the count by 1
-                } else {
-                    $(this).show();
-                    $(this).filter();
-                    count++;
-                }
-            });
-
-            // Update the count
-            var numberItems = count;
-            $("#filter-count").text("Number of Restaurants = " + count);
-        });
-    });
-</script>

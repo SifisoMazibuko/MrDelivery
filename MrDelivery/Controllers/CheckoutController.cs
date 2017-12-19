@@ -92,11 +92,11 @@ namespace MrDelivery.Controllers
 
                 var order = context.Order.Find(userId);
                 var mod = new OrderViewModel();
-                var myItems = context.Order.Where(i => i.Id == userId);
+                var myItems = context.Order.Where(i => i.Id == userId).OrderByDescending(x => x.Id).Take(1).ToList();
                 foreach (var item in myItems)
                 {
                     mod.Description = item.Description;
-                    mod.UnitPrice =item.UnitPrice;
+                    mod.UnitPrice = item.UnitPrice;
                 }
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Sifiso Mazibuko", "mazibujo19@gmail.com"));
@@ -112,7 +112,7 @@ namespace MrDelivery.Controllers
                                 +"\nOrder Description: " + mod.Description + ""
                                 +"\nOrder Price: R " + mod.UnitPrice + ""
                                 +"\nOrder Date: "+ order.Created + ""
-                                +"\nOrder Delivery: "+ order.Delivery + ""
+                                +"\nOrder Delivery: "+ order.Delivery + " min"
                                 +"\n\n\n"+ "Thank you!" 
                                 +"\n\n"+ "Kind Regards,"
                                 +"\n Team MrDFood\n"

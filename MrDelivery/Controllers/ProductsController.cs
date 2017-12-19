@@ -34,18 +34,6 @@ namespace MrDelivery.Controllers
             
             ViewBag.itemsAdded = context.Carts.Where(i => i.Id == id).GroupBy(x=>x.Id).Select(g => g.First());
             ViewBag.itemRes = context.Restaurants.Where(i => i.Id == id);
-            //ViewBag.itemsAdded = context.Items.GroupBy(x => x.Id);
-           // CartViewModel model = new CartViewModel();
-
-            //foreach(var item in itemsAdded)
-            //{
-            //    model.Id = item.Id;
-            //    model.ItemName = item.ItemName;
-            //    model.Description = item.Description;
-            //    model.UnitPrice = item.UnitPrice;
-            //    model.MenuType = item.MenuType;
-            //}
-            
             return View(model);
         }
         [HttpPost]
@@ -55,10 +43,6 @@ namespace MrDelivery.Controllers
             {
                 return RedirectToAction("Index","Home");
             }
-            //var item = new Cart();
-            //item.Id = model.Id;
-            //item.Quantity = model.Quantity;
-            //item.dateCreated = model.dateCreated;
             var errors = ModelState
                           .Where(x => x.Value.Errors.Count > 0)
                           .Select(x => new { x.Key, x.Value.Errors })

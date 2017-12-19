@@ -24,46 +24,38 @@ namespace MrDelivery.Controllers
         public IActionResult Index(int userId)
         {
             userId = Convert.ToInt32(TempData["customerId"]);
-
+            var odr = new OrderViewModel();
+            var orderz = context.Order.Where(od => od.Id == userId);
+            foreach (var item in orderz)
+            {
+                odr.Delivery = item.Delivery;
+            }
             if (userId > 0) {
+                var time = Convert.ToInt32(odr.Delivery);
+                if (time <= 46)
+                {
+                    odr.Status = "pending...";
+                }
+                else {
+                    odr.Status = "Delivered";
+                }
                 var orders = context.Order.Where(od => od.Id == userId);
                 var viewModel = orders.Select(o => new OrderViewModel()
                 {
                     Id = o.Id,
                     OrderName = o.OrderName,
-                    Status = "Pending...",
-                    dateTimeOffset = DateTimeOffset.Now,
-                    Delivery = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
-                }).ToList();
-
-
-                return View(viewModel);
+                    Status = odr.Status,
+                    dateTimeOffset = DateTime.UtcNow.ToLocalTime(),
+                    Delivery = DateTime.Today.AddMinutes(45).ToString("mm")
+                 }).ToList();
+                
+               
+                return View(viewModel);                
             }
             else {
                 return RedirectToAction("Login", "Account");
-            }
-           
-            //var order = new Order();
-
-            //var viewModel = (from o in context.Carts
-            //                 where o.Id == id
-            //                 select o).ToList();
-            //foreach (var item in viewModel)
-            //{
-            //    //order.Id = item.Id;
-            //    //order.OrderName = item.ItemName;
-            //    //order.Status = "pending";
-            //    //order.Created = item.dateCreated;
-
-            //    ViewBag.id = item.Id;
-            //    ViewBag.orderName = item.OrderName;
-            //    ViewBag.date = item.dateTimeOffset;
-            //    ViewBag.status = item.Status;
-            //}
-
-           
-        }
-       
+            }                    
+        }      
 
         protected override void Dispose(bool disposing)
         {

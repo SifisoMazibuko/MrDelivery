@@ -21,12 +21,9 @@ namespace Infrastructure.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Restaurants> Restaurants { get; set; }
-        //public DbSet<Admin> Admins { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Item> Items { get; set; }
-        //public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Order { get; set; }
-        //public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Address> Addresses { get; set; }
 

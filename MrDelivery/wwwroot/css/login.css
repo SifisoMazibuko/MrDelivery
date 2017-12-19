@@ -9,7 +9,9 @@
 
 #textboxBorder {
     border-color: #6dcff6;
-    border-bottom: 2px solid black;
+    border: none;
+    border: initial #6dcff6;
+    border-bottom: 1.9px solid black;
 }
 
 input {
@@ -68,4 +70,15 @@ input[type="password"]:-ms-input-placeholder {
 
 input[type="password"]::-moz-placeholder {
     color: #ffffff;
+}
+
+h2 {
+    position: relative;
+    margin-left: 650px;
+    display: inline-block;
+}
+
+#close {
+    margin-top: -40px;
+    margin-right: 20px;
 }

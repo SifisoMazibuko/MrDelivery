@@ -52,10 +52,13 @@
     </nav>
     <img src="~/images/mrd-food.jpg" class="background" />
      @await Html.PartialAsync("_SearchPartial")   
-     @await Html.PartialAsync("_DriverPartial")
     <div class="">
         @RenderBody()
     </div>
+
+     @await Html.PartialAsync("_DriverPartial")
+
+   
     <br/>
     <div class="container body-contents">
         <footer>

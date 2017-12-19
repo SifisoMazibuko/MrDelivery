@@ -18,12 +18,13 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
+<a asp-action="Index" asp-controller="Home" class="close" id="close"><span style="font-size: 40px">&times;</span></a>
 <body class="registerBackground">
-    <div class="row form-horizontal">
+    <div class="row">
         <h3>Delicious food awaits!</h3>
         <h5>All we need is your email and mobile number</h5>
         <br />
-        <div class="col-md-4">
+        <div class="col-sm-4 col-md-4 col-lg-4">
             <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">

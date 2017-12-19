@@ -20,21 +20,40 @@ namespace MrDelivery.Controllers
             context = new MrDeliveryContext(option);
             _disposeContext = true;
         }
+        
         public IActionResult Index(string search)
-      {
-            if (!String.IsNullOrEmpty(search) || !String.IsNullOrWhiteSpace(search))
+        {
+            TempData["search"] = search;
+            var res = (from c in context.Restaurants
+                       where c.Location == search || c.SearchLocation == search
+                       select c).ToList();
+            ViewBag.res = res;
+            if (res.Count == 0) {
+
+                return View();
+                            //eturn RedirectToAction("Restaurants", "Restaurant");                        
+            }
+            else
             {
-                var restaurant = context.Restaurants.Where(s => s.Location.StartsWith(search)
-                                || s.Location.Contains(search)
-                                );
-                foreach(var a in restaurant)
+                if (!String.IsNullOrEmpty(search) || !String.IsNullOrWhiteSpace(search))
                 {
-                    if (!string.IsNullOrEmpty(a.Location))
+                    var restaurant = context.Restaurants.Where(s => s.SearchLocation.StartsWith(search)
+                                    || s.SearchLocation.Contains(search)
+                                    ).Where(c => c.Location == search || c.SearchLocation == search);
+
+                    foreach (var a in restaurant)
                     {
-                        return RedirectToAction("Restaurants", "Restaurant");
+                        if (!string.IsNullOrEmpty(a.Location))
+                        {
+                            //return View(res);
+                            return RedirectToAction("Restaurants", "Restaurant");
+                        }
                     }
                 }
+                return View(res);
             }
+          
+           
             //if (ModelState.IsValid)
             //{
             //    if (!String.IsNullOrEmpty(search))
@@ -46,9 +65,36 @@ namespace MrDelivery.Controllers
             //    // return RedirectToAction("Restaurants", "Restaurant");
             //}
 
-            ViewBag.res = context.Restaurants.ToList();
-            return View();
+            //iewBag.res = context.Restaurants.ToList();
+            //return View();
         }
+
+
+        //public IActionResult GetRestaurants(string search)
+        //{
+        //    var res = (from c in context.Restaurants
+        //               where c.Location == search || c.SearchLocation == search
+        //               select c).ToList();
+        //    ViewBag.res = res;
+        //    if (!String.IsNullOrEmpty(search) || !String.IsNullOrWhiteSpace(search))
+        //    {
+        //        var restaurant = context.Restaurants.Where(s => s.SearchLocation.StartsWith(search)
+        //                        || s.SearchLocation.Contains(search)
+        //                        ).Where(c => c.Location == search || c.SearchLocation == search);
+
+        //        foreach (var a in restaurant)
+        //        {
+        //            if (!string.IsNullOrEmpty(a.Location))
+        //            {
+
+
+        //                return View(res);
+        //                //eturn RedirectToAction("Restaurants", "Restaurant");
+        //            }
+        //        }
+        //    }
+        //    return View(res);
+        //}
         //public IQueryable<Restaurant> GetRestaurants(RestaurantViewModel search)
         //{
         //    var restaurant = context.Restaurants.AsQueryable();

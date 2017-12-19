@@ -219,10 +219,11 @@ border: 0;
             <div style="margin-bottom:10px;"></div>
 
             <div class="row" style="padding-left:25px;padding-right:25px;">
+         
+              @*sum = Model.UnitPrice * Model.Quantity;*@
             @foreach (var Model in Model)
-        {
-            sum = Model.UnitPrice * Model.Quantity;
-                    <div style="margin-top:-55px;"></div>
+            {
+                <div style="margin-top:-55px;"></div>
                     <div class="col-lg-6">
                         <div id="myBtn" style="border:2px solid #cfcccc;height:auto;width:100%;display:inline-block">
                             <div id="myBtn">
@@ -241,31 +242,23 @@ border: 0;
                             </div>
                         </div>
                     </div><br />
-                    @*</div>*@
+              
+              
                     <br />
                     <form method="post">
                         <div id="myModal" class="modal">
                             <!-- Modal content -->
                             <div class="modal-content">
                                 <span class="close">&times;</span>
-                                <p style="font-size:20px;margin-top:5px;text-align:left"><b>@Model.ItemName</b></p>
-                                <span style="font-size:12px;">@Model.Description</span>
-                                @*<a href="@Url.Action("AddToCart","Products", new { id = Model.Id})" class="submit-button add-to-cart-button">
-                                    <span>Add To Cart</span>
-                                    <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
-                                </a>*@
+                                <p style="font-size:20px;margin-top:5px;text-align:left"><b>@ViewBag.ItemName</b></p>
+                                <span style="font-size:12px;">@ViewBag.Description</span>
                                 <br/>
                                 
                                 <br />
                                <button class="submit-button add-to-cart-button" type="submit">
                                    <span>Add To Cart</span>
-                                   <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
-                                   
-                                   @*<span class="pull-right" style="padding-right:15px;">R @String.Format("{0:0.00}", sum) </span>*@
+                                   <span class="pull-right" style="padding-right:15px;">R @ViewBag.UnitPrice </span>
                                 </button>
-                                @*R @Math.Round(Model.Quantity * Model.UnitPrice, 2).ToString("N2")
-                                <div>@Model.Total()</div>
-                                Quantity<input type="submit" name="updatebutton" class="btn-primary" value="Update" />*@
                             </div>
                         </div>
                        
@@ -277,20 +270,7 @@ border: 0;
                         <input type="hidden" asp-for="@Model.MenuType" name="menuType" />
                     </form>                    
                 }
-            </div> 
-
-            @*@foreach (var itemz in Model)
-            {
-                @for (int i = 0; i < itemz.Items.Count; i++)
-                {
-                    var item = itemz.Items[i];
-                    <input type="hidden" name="@("Items["+i+"]")" value="@item.Id" />
-                    <input type="number" name="@("Items["+ i +"].Value")" value="@item.Quantity" />
-                                    <section>R @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</section>
-                <div>@itemz.Total()</div>
-                }
-            }*@
-           
+            </div>
         </div>
        
     </div>
