@@ -134,11 +134,29 @@ namespace MrDelivery.Controllers
                     message.From.Add(new MailboxAddress("Sifiso Mazibuko", "mazibujo19@gmail.com"));
                     message.To.Add(new MailboxAddress(model.email));
                     message.Subject = "Welcome to MrDeliverFood";
+                    //message.Body = new TextPart
+                    //{
+                    //    Text = string.Format("Hi " + name + ", welcome to MrDelivery Food Service, Hope you enjoy our service"),
+
+                    //};
+
                     message.Body = new TextPart
                     {
-                        Text = string.Format("Hi " + name + ", welcome to MrDelivery Food Service, Hope you enjoy our service"),
+                        Text = string.Format("Hi " + name + "," +
+                                "\nWelcome to MrDelivery Food Service." +
+                                "\n\n"
+                                + "Hope you enjoy our service." 
+                                + "\n\n\n" + "Thank you!"
+                                + "\n\n" + "Kind Regards,"
+                                + "\n Team MrDFood\n"
+                                + "+2761 010 1256 \n"
+                                + "MrDfood@MrDfood.co.za"
+                        )
+
 
                     };
+
+
                     using (var client = new MailKit.Net.Smtp.SmtpClient())
                     {
                         client.ServerCertificateValidationCallback = (s, c, h, e) => true;

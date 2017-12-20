@@ -69,11 +69,9 @@ namespace MrDelivery.Controllers
                         .ToArray();
 
             if (ModelState.IsValid)
-            {                
-
+            {  
                 var payment = new Payment();
                 {
-                    //payment.Id = model.Id;
                     payment.Name = model.Name;
                     payment.cardNumber = model.cardNumber;
                     payment.month = model.month;
@@ -93,11 +91,14 @@ namespace MrDelivery.Controllers
                 var order = context.Order.Find(userId);
                 var mod = new OrderViewModel();
                 var myItems = context.Order.Where(i => i.Id == userId).OrderByDescending(x => x.Id).Take(1).ToList();
+              
                 foreach (var item in myItems)
                 {
                     mod.Description = item.Description;
                     mod.UnitPrice = item.UnitPrice;
                 }
+                var myItemz = context.Order.Where(i => i.Id == userId).OrderByDescending(x => x.Id).Last();
+
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Sifiso Mazibuko", "mazibujo19@gmail.com"));
                 message.To.Add(new MailboxAddress(cus.email));
@@ -105,12 +106,12 @@ namespace MrDelivery.Controllers
                 message.Body = new TextPart
                 {
                     Text = string.Format("Hi " + payment.Name + "," +
-                                "\n\n Your order was received and is been processed. " +
+                                "\n\nYour order was received and is been processed. " +
                                 "\n\n"
                                 +"Order Number: "+ order.Id+ ""
                                 +"\nOrder Name: "+ order.OrderName + ""
-                                +"\nOrder Description: " + mod.Description + ""
-                                +"\nOrder Price: R " + mod.UnitPrice + ""
+                                +"\nOrder Description: " + myItemz.Description + ""
+                                +"\nOrder Price: R " + myItemz.UnitPrice + ""
                                 +"\nOrder Date: "+ order.Created + ""
                                 +"\nOrder Delivery: "+ order.Delivery + " min"
                                 +"\n\n\n"+ "Thank you!" 
