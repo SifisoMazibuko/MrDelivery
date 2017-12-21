@@ -29,11 +29,17 @@ namespace MrDelivery.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult AddToCart(CartViewModel model, int id)
+        [Route("~/AddToCart/{id}/AddToCart")]
+        public IActionResult AddToCart(CartViewModel model, int id, string ItemName)
         {
-            
             ViewBag.itemsAdded = context.Carts.Where(i => i.Id == id).GroupBy(x=>x.Id).Select(g => g.First());
             ViewBag.itemRes = context.Restaurants.Where(i => i.Id == id);
+            var crt = context.Carts.Where(i => i.Id == id);
+            foreach (var item in crt)
+            {
+                item.ItemName = ItemName;
+            }
+        
             return View(model);
         }
         [HttpPost]

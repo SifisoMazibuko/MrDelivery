@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<ApplicationCore.Entities.Restaurants>*@
-@*@model IEnumerable<MrDelivery.ViewModels.CartItemViewModel>*@
-@using MrDelivery.ViewModels
+﻿@using MrDelivery.ViewModels
 @model IEnumerable<MrDelivery.ViewModels.CartItemViewModel>
 @{
         Layout = null;
@@ -14,6 +12,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/driver.css" />
+        <link rel="stylesheet" href="~/css/menu.css" />
         <link rel="shortcut icon" href="~/images/mrd-logo-donut.svg" class="logo" />
     </environment>
     <environment exclude="Development">
@@ -22,179 +21,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    <style>
-        .menu-tabs {
-            background: #6dcff6;
-            margin: 0 25px;
-            padding: 25px 0;
-            text-align: center;
-            font-weight: 700;
-            border-radius: 6px;
-        }
-        .menu-info {
-            background: #fff;
-            border: 1px solid gray;
-            margin: 0 25px;
-            padding: 30px 0;
-            text-align: center;
-            font-weight: 700;
-            border-radius: 6px;
-        }
-
-        .restaurant-view {
-            position: static;
-            height: auto;
-            padding-top: 0;
-            margin-bottom: 0;
-            background: #fff;
-            border-radius: 0 0 8px 8px;
-            z-index: 2;
-        }
-
-        .restaurant-items-wrapper {
-            position: relative;
-            cursor: pointer;
-            background: #ffffff;
-            margin: 0 25px;
-            padding: 25px 0;
-            text-align: center;
-        }
-
-        .menu-go-to-cart {
-            width: 100%;
-            position: fixed;
-border-top: 1px solid #eee;
-            border-radius: 2px;
-            box-shadow: 0 0 5px rgba(0,0,0,.05);
-background: 0 0;
-            padding: 0;
-            bottom: 0;
-        }
-        .restaurant-logo {
-        width: 60px;
-        padding: 20px 0 0;
-        position: absolute;
-    }
-
-        .restaurant-logo span {
-    display: block;
-}
-
-        .restaurant-logo img {
-    width: 60px;
-    height: auto;
-    border-radius: 100px;
-    margin-right: 200PX;
-            float: left;
-    top: -60px;
-    left: -210px;
-    align-content:flex-start;
-}
-        .nav .pull-left {
-            padding: 0px 0px 0px 90px;
-        }
-        .move-left {
-            padding: 20px 798px 0px 40px;
-        }
-        .top-left {
-            position: absolute;
-            top: 25px;
-            left: 170px;
-        }
-    </style>
-    <style>
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 140px;
-            top: 0;
-            width: 80%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-       .close:hover,
-       .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-       }
-    </style>
-    <style>
-        .add-to-cart-button {
-            line-height: 80px;
-            height: 100px;
-        }
-        .add-to-cart-button {
-            bottom: 0;
-            width: 100%;
-            left: 0;
-            margin: 0;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-            border-radius: 0;
-        }
-        .button.disabled, .button[disabled], .submit-button.is-working, .submit-button[disabled] {
-            background-color: #ddd;
-            color: #888;
-        }
-        .submit-button {
-            background: #ffe530;
-            height: auto;
-            font-size: 16px;
-        }
-        .submit-button {
-            background: #ffe700;
-            margin: 15px 2px 0 0;
-            font-size: 14px;
-            font-weight: 700;
-            padding: 0;
-            text-align: center;
-            -webkit-border-radius: 2px;
-            -moz-border-radius: 2px;
-            border-radius: 2px;
-            cursor: pointer;
-            display: block;
-            -webkit-transition: background .2s linear,color .2s linear;
-            -o-transition: background .2s linear,color .2s linear;
-            -moz-transition: background .2s linear,color .2s linear;
-transition: background .2s linear,color .2s linear;
-border: 0;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            color: #31312c;
-            height: 50px;
-            line-height: 50px;
-            position: relative;
-        }
-    </style>
 </head>
-@{
-    decimal sum = 0;
-}
 <body style="background-color:#e6e6e6; padding:10px;">
     <div class="container" style="padding-top:-50px;margin-top:-9px;display:table;">
         <img src="@ViewBag.img" style="border-radius:8px;height:250px;width:100%;background-size:cover;position:relative;background-position:center center;box-shadow: none;" />
@@ -250,14 +77,14 @@ border: 0;
                             <!-- Modal content -->
                             <div class="modal-content">
                                 <span class="close">&times;</span>
-                                <p style="font-size:20px;margin-top:5px;text-align:left"><b>@ViewBag.ItemName</b></p>
-                                <span style="font-size:12px;">@ViewBag.Description</span>
+                                <p style="font-size:20px;margin-top:5px;text-align:left"><b>@Model.ItemName</b></p>
+                                <span style="font-size:12px;">@Model.Description</span>
                                 <br/>
                                 
                                 <br />
                                <button class="submit-button add-to-cart-button" type="submit">
                                    <span>Add To Cart</span>
-                                   <span class="pull-right" style="padding-right:15px;">R @ViewBag.UnitPrice </span>
+                                   <span class="pull-right" style="padding-right:15px;">R @Model.UnitPrice </span>
                                 </button>
                             </div>
                         </div>
@@ -274,8 +101,6 @@ border: 0;
         </div>
        
     </div>
-    @*<div class="menu-go-to-cart"><span>Go To Cart</span>
-        </div>*@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

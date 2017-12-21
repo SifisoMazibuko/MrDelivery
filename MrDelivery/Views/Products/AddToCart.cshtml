@@ -5,83 +5,19 @@
     Layout = "~/Views/Shared/CartLayout.cshtml";
 }
 
-<style>
-    .cart-totals {
-        background: #fff;
-        border: 0;
-        padding: 20px;
-        border-radius: 6px;
-        box-shadow: 0 2px 5px rgba(0,0,0,.2);
-    }
-    .cart-totals {
-        display: table;
-        width: 100%;
-        border-top: 2px dotted #eee;
-    }
-    .cart-totals .row {
-        display: table-row;
-    }
-    .cart-totals .row span {
-        display: table-cell;
-        font-size: 14px;
-        color: #31313c;
-        padding: 0 0 15px;
-        font-weight: 400;
-    }
-</style>
-<style>
-    .add-to-cart-button {
-        line-height: 80px;
-        height: 80px;
-    }
-
-    .add-to-cart-button {
-        bottom: 0;
-        width: 100%;
-        left: 0;
-        margin: 0;
-        -webkit-border-radius: 0;
-        -moz-border-radius: 0;
-        border-radius: 0;
-    }
-
-    .button.disabled, .button[disabled], .submit-button.is-working, .submit-button[disabled] {
-        background-color: #ddd;
-        color: #888;
-    }
-
-    .submit-button {
-        background: #ffe530;
-        height: auto;
-        font-size: 16px;
-    }
-
-    .submit-button {
-        background: #ffe700;
-        margin: 15px 5px 0;
-        font-size: 14px;
-        font-weight: 700;
-        padding: 0;
-        text-align: center;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-        cursor: pointer;
-        display: block;
-        -webkit-transition: background .2s linear,color .2s linear;
-        -o-transition: background .2s linear,color .2s linear;
-        -moz-transition: background .2s linear,color .2s linear;
-        transition: background .2s linear,color .2s linear;
-        border: 0;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        color: #31312c;
-        height: 50px;
-        line-height: 50px;
-        position: relative;
-    }
-</style>
+<head>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/cart.css" />
+        <link rel="shortcut icon" href="~/images/mrd-logo-donut.svg" class="logo" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" as p-append-version="true" />
+    </environment>
+</head>
 
     @{
         decimal sum = 0;

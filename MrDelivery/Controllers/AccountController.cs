@@ -145,7 +145,9 @@ namespace MrDelivery.Controllers
                         Text = string.Format("Hi " + name + "," +
                                 "\nWelcome to MrDelivery Food Service." +
                                 "\n\n"
-                                + "Hope you enjoy our service." 
+                                + "Hope you enjoy our service."
+                                + "\n\n Your Username: " + model.email
+                                + "\n\n Password: " + model.password
                                 + "\n\n\n" + "Thank you!"
                                 + "\n\n" + "Kind Regards,"
                                 + "\n Team MrDFood\n"

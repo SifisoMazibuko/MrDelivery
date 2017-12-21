@@ -37,8 +37,7 @@ namespace MrDelivery.Controllers
             if (search == "") {
                 var res = context.Restaurants.ToList();
                 ViewBag.res = res;
-            }
-            
+            }            
             
             return View();
         }

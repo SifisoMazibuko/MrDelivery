@@ -156,13 +156,12 @@ namespace MrDelivery.Controllers
             var errors = ModelState
                       .Where(x => x.Value.Errors.Count > 0)
                       .Select(x => new { x.Key, x.Value.Errors })
-                       .ToArray();
+                       .ToArray(); 
 
             if (ModelState.IsValid)
             {
                 var address = new Address();
                 {
-                    //address.Id = model.Id;
                     address.StreetNo = model.StreetNo;
                     address.UnitNo = model.UnitNo;
                     address.BuildingType = model.BuildingType;
@@ -170,7 +169,6 @@ namespace MrDelivery.Controllers
                 };
                 context.Addresses.Add(address);
                 context.SaveChanges();
-                //TempData["Address"] = "Address Successfully saved";
             }
            
             return RedirectToAction("SaveAddress", new { id = id});
